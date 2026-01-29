@@ -94,7 +94,7 @@ Research and generate strategic documents:
 
 ## Templates
 
-### Core Templates (12)
+### Core Templates (12) → `docs/`
 
 1. **BRAND_GUIDELINES** - Product name, beliefs, kill list, voice
 2. **NORTHSTAR** - North Star metric, personas, success phases
@@ -109,13 +109,13 @@ Research and generate strategic documents:
 11. **INDEX** - Documentation hub
 12. **OPERATIONS_RUNBOOK** - Production operations (optional)
 
-### Design Templates (--ux, 3)
+### Design Templates (--ux, 3) → `docs/design/`
 
 - **USER_JOURNEYS** - Emotional journey maps per persona
 - **UI_DESIGN_SYSTEM** - Design tokens, components, patterns
 - **ACCESSIBILITY** - WCAG 2.1 AA compliance patterns
 
-### Architecture Templates (--deep, 7)
+### Architecture Templates (--deep, 7) → `docs/architecture/`
 
 - **AGENT_PROMPTS** - System prompts per agent
 - **PIPELINE_ORCHESTRATION** - Agent coordination patterns

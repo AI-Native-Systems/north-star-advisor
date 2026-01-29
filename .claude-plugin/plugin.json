@@ -1,6 +1,6 @@
 {
   "name": "north-star-advisor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Strategic document generation for agentic applications. Generate 22 design documents following the North Star methodology: brand guidelines, architecture blueprints, competitive analysis, and more.",
   "author": {
     "name": "Patrick Pena"

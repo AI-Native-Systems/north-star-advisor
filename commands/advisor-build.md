@@ -343,13 +343,16 @@ Update state.json: `research_complete: true`
 
 ### Deep Templates (--deep flag)
 
-After Phase 7, these additional templates are generated:
-- PIPELINE_ORCHESTRATION
-- RESILIENCE_PATTERNS
-- IMPLEMENTATION_SCAFFOLD
-- OBSERVABILITY
-- TESTING_STRATEGY
-- HANDOFF_PROTOCOL
+After Phase 7, these additional templates are generated in `north-star-advisor/docs/architecture/`:
+
+| Template | Output Path |
+|----------|-------------|
+| PIPELINE_ORCHESTRATION | north-star-advisor/docs/architecture/PIPELINE_ORCHESTRATION.md |
+| RESILIENCE_PATTERNS | north-star-advisor/docs/architecture/RESILIENCE_PATTERNS.md |
+| IMPLEMENTATION_SCAFFOLD | north-star-advisor/docs/architecture/IMPLEMENTATION_SCAFFOLD.md |
+| OBSERVABILITY | north-star-advisor/docs/architecture/OBSERVABILITY.md |
+| TESTING_STRATEGY | north-star-advisor/docs/architecture/TESTING_STRATEGY.md |
+| HANDOFF_PROTOCOL | north-star-advisor/docs/architecture/HANDOFF_PROTOCOL.md |
 
 ---
 
