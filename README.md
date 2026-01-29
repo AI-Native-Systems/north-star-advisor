@@ -81,6 +81,7 @@ Research and generate strategic documents:
 | `/northstar:advisor-build` | Research and generate documents |
 | `/northstar:status` | Show research and generation progress |
 | `/northstar:resume` | Continue from last checkpoint |
+| `/northstar:export` | Package docs into shareable zip |
 | `/northstar:help` | Show available commands |
 
 ## Generation Flags
@@ -127,7 +128,7 @@ Research and generate strategic documents:
 
 ## Research Phase
 
-Before generation, 4 research agents run in parallel to gather domain insights:
+Before generation, 4 research agents run in parallel using **WebSearch** to gather domain insights:
 
 | Agent | Focus |
 |-------|-------|
