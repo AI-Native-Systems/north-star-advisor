@@ -542,7 +542,31 @@ Documents:
 Strategic context: north-star-advisor/ai-context.yml (complete)
 Research summary:  north-star-advisor/.work-in-progress/research/summary.md
 
-▶ Next: Run /northstar:export to create a shareable zip
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ NEXT STEP: Add to your project's CLAUDE.md
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Add this to your CLAUDE.md so Claude Code uses the strategic context:
+
+┌─────────────────────────────────────────────────────
+│ ## Strategic Context
+│
+│ This project was planned using North Star Advisor.
+│ Before implementing features, read:
+│
+│ - `north-star-advisor/ai-context.yml` - Strategic context (start here)
+│ - `north-star-advisor/docs/INDEX.md` - Documentation hub
+│
+│ The ai-context.yml contains:
+│ - North Star metric and success criteria
+│ - Architecture patterns and agent topology
+│ - Security requirements and guardrails
+│ - Roadmap phases and milestones
+│
+│ Always align implementation decisions with these strategic documents.
+└─────────────────────────────────────────────────────
+
+▶ Run /northstar:export to create a shareable zip
 ```
 
 ---
