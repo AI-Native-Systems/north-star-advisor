@@ -391,13 +391,14 @@ For each phase in order:
 │     Store in inputs.yml under phase_decisions               │
 │                                                             │
 │  3. Gather Cross-References                                 │
-│     Read outputs/ from completed phases                     │
+│     Read north-star-advisor/.work-in-progress/outputs/ from completed phases │
 │     Build context from dependencies                         │
 │     Include research findings (for Phases 6, 7, 8)          │
 │                                                             │
 │  4. Spawn Generator Agent                                   │
 │     Use Task tool with northstar-generator agent            │
-│     Provide: template, inputs, cross-refs, research         │
+│     Provide: template_path, output_path, inputs, cross-refs │
+│     output_path MUST be: north-star-advisor/docs/{...}.md   │
 │                                                             │
 │  5. Validate Output                                         │
 │     Spawn northstar-validator agent                         │
@@ -407,7 +408,7 @@ For each phase in order:
 │                                                             │
 │  6. Write Output                                            │
 │     Write to north-star-advisor/docs/{path}/{TEMPLATE_NAME}.md │
-│     Extract key outputs to outputs/{name}.yml               │
+│     Extract key outputs to north-star-advisor/.work-in-progress/outputs/{name}.yml │
 │                                                             │
 │  7. Update ai-context.yml                                   │
 │     Add phase-specific fields (see table below)             │

@@ -164,10 +164,18 @@ Save to cache for reuse:
 
 ```
 north-star-advisor/.work-in-progress/research/
-├── competitive-2024-01-15.yml
-├── market-2024-01-15.yml
-└── sources.yml
+├── tech-stack.md
+├── features-ux.md
+├── architecture.md
+├── pitfalls.md
+└── summary.md
 ```
+
+**CRITICAL - Filename Rules:**
+- Use EXACTLY these filenames: `tech-stack.md`, `features-ux.md`, `architecture.md`, `pitfalls.md`, `summary.md`
+- Do NOT add dates to filenames (e.g., NOT `tech-stack-2024-01-15.md`)
+- Do NOT add "research" to filenames (e.g., NOT `tech-stack-research.md`)
+- File timestamps track freshness, not filename conventions
 
 ---
 
@@ -206,7 +214,7 @@ differentiation_opportunities:
     reasoning: "Most tools focus on templates, not strategy"
     confidence: "medium"
 
-cache_path: "north-star-advisor/.work-in-progress/research/competitive-2024-01-15.yml"
+cache_path: "north-star-advisor/.work-in-progress/research/"  # Files: tech-stack.md, features-ux.md, architecture.md, pitfalls.md, summary.md
 ```
 
 ### Research with Limitations
@@ -274,10 +282,11 @@ fallback: "Use cached research from 2024-01-10"
 ### Cache Structure
 
 ```yaml
-# north-star-advisor/.work-in-progress/research/competitive-2024-01-15.yml
+# north-star-advisor/.work-in-progress/research/tech-stack.md
+# Filename must be exactly: tech-stack.md, features-ux.md, architecture.md, pitfalls.md, or summary.md
 metadata:
   research_type: "competitive"
-  created_at: "2024-01-15T14:30:00Z"
+  created_at: "2024-01-15T14:30:00Z"  # Timestamp inside file, not in filename
   queries_used: 8
   sources_analyzed: 12
 

@@ -138,7 +138,7 @@ cross_refs:
    - Check anchor exists if specified
 
 2. **Data References**: `{{ref:document.field}}`
-   - Verify document exists in outputs/
+   - Verify document exists in north-star-advisor/.work-in-progress/outputs/
    - Verify field exists in document
 
 3. **Terminology Consistency**:

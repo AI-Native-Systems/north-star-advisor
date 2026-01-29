@@ -97,12 +97,26 @@ Before returning:
 3. Validate markdown formatting
 4. Ensure word count meets minimum (varies by template)
 
-### Step 6: Extract Outputs
+### Step 6: Write Document
 
-Generate structured output for cross-referencing:
+**CRITICAL**: Write the generated document to the EXACT path specified in `output_path`:
+
+1. Use the `Write` tool with the full path from inputs (e.g., `north-star-advisor/docs/NORTHSTAR.md`)
+2. Do NOT write to just `docs/` - always use the complete path including `north-star-advisor/` prefix
+3. Create parent directories if they don't exist
 
 ```yaml
-# outputs/northstar.yml
+# Example: If output_path is "north-star-advisor/docs/BRAND_GUIDELINES.md"
+# Write to exactly: north-star-advisor/docs/BRAND_GUIDELINES.md
+# NOT to: docs/BRAND_GUIDELINES.md
+```
+
+### Step 7: Extract Outputs
+
+Generate structured output for cross-referencing and write to `north-star-advisor/.work-in-progress/outputs/`:
+
+```yaml
+# north-star-advisor/.work-in-progress/outputs/northstar.yml
 metric: "Weekly Active Builders"
 measurement: "Count of users who create/edit projects in 7-day period"
 personas:
@@ -114,12 +128,12 @@ phases:
     success: "First document in < 5 min"
 ```
 
-### Step 7: Return Result
+### Step 8: Return Result
 
 ```yaml
 success: true
 document_path: "north-star-advisor/docs/NORTHSTAR.md"
-outputs_path: "outputs/northstar.yml"
+outputs_path: "north-star-advisor/.work-in-progress/outputs/northstar.yml"
 word_count: 2847
 sections_generated: 8
 warnings: []
@@ -204,7 +218,7 @@ warnings: []
 # Success
 success: true
 document_path: "north-star-advisor/docs/NORTHSTAR.md"
-outputs_path: "outputs/northstar.yml"
+outputs_path: "north-star-advisor/.work-in-progress/outputs/northstar.yml"
 stats:
   word_count: 2847
   sections: 8

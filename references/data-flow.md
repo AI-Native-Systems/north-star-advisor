@@ -242,7 +242,7 @@ Target users: {{ref:northstar.personas[0].name|"Primary User"}}
 ### In Outputs (YAML)
 
 ```yaml
-# outputs/brand.yml
+# north-star-advisor/.work-in-progress/outputs/brand.yml
 product_name: "North Star Advisor"
 beliefs:
   - "Strategy before code"
@@ -255,7 +255,7 @@ kill_list:
 ### Resolution Priority
 
 1. `inputs.yml` (user inputs)
-2. `outputs/{document}.yml` (generated outputs)
+2. `north-star-advisor/.work-in-progress/outputs/{document}.yml` (generated outputs)
 3. Source document (full parse)
 4. Default/fallback value
 5. Error if required
@@ -288,7 +288,7 @@ When an upstream document changes, downstream documents may need regeneration.
 
 ## Output Extraction
 
-Each phase extracts key data to `outputs/` for efficient cross-referencing.
+Each phase extracts key data to `north-star-advisor/.work-in-progress/outputs/` for efficient cross-referencing.
 
 ### Extraction Rules
 
