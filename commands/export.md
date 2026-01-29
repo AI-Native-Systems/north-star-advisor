@@ -1,3 +1,7 @@
+---
+description: Package docs and ai-context.yml into a shareable zip file.
+---
+
 # /northstar:export
 
 Package generated strategic documents and AI context into a shareable zip file.

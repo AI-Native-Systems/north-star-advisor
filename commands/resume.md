@@ -1,3 +1,7 @@
+---
+description: Resume generation from the last checkpoint after interruption.
+---
+
 # /northstar:resume
 
 Resume generation from the last checkpoint after interruption.

@@ -1,3 +1,7 @@
+---
+description: Research and generate 22 strategic documents. Runs domain research, then generates documents informed by findings.
+---
+
 # /northstar:advisor-build
 
 Research and generate strategic documents following the North Star methodology. This command first conducts domain research, then generates 13 strategic documents informed by the research findings.

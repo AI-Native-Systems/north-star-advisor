@@ -1,3 +1,7 @@
+---
+description: Display current research and generation progress with next steps.
+---
+
 # /northstar:status
 
 Display current generation progress and next steps.

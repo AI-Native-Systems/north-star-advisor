@@ -1,3 +1,7 @@
+---
+description: Display available commands and usage information.
+---
+
 # /northstar:help
 
 Display available North Star Advisor commands and usage information.

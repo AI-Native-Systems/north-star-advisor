@@ -1,3 +1,7 @@
+---
+description: Begin strategic discovery through open exploration. Acts as your thinking partner to articulate what you're building.
+---
+
 # /northstar:advisor
 
 Begin strategic discovery for a new North Star Advisor project. This command acts as your thinking partner, helping you articulate what you're building through open exploration and targeted questions.
