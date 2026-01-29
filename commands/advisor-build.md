@@ -126,7 +126,7 @@ Search for:
 - Popular libraries and their trade-offs
 - Version recommendations and compatibility
 
-Use WebSearch or mcp__pplx__perplexity-search.
+Use WebSearch to find real-world examples and best practices.
 Return structured markdown with recommendations and rationale.
 ```
 
@@ -146,6 +146,7 @@ Search for:
 - Onboarding flows for similar products
 - Accessibility considerations
 
+Use WebSearch to find real-world examples and patterns.
 Return structured markdown with expected features and UX recommendations.
 ```
 
@@ -165,6 +166,7 @@ Search for:
 - API design patterns
 - Scalability considerations
 
+Use WebSearch to find real-world examples and patterns.
 Return structured markdown with pattern recommendations.
 ```
 
@@ -184,6 +186,7 @@ Search for:
 - Security vulnerabilities specific to this type
 - Performance issues and how to prevent them
 
+Use WebSearch to find real-world examples and cautionary tales.
 Return structured markdown with pitfalls and prevention strategies.
 ```
 
