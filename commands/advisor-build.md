@@ -344,9 +344,20 @@ Update state.json: `research_complete: true`
 | 12 | ACTION_ROADMAP | north-star-advisor/docs/ACTION_ROADMAP.md | Phase 11 |
 | 13 | INDEX | north-star-advisor/docs/INDEX.md | All phases |
 
+### UX Templates Execution Order (--ux flag)
+
+**IMPORTANT**: UX templates MUST be generated SEQUENTIALLY due to dependencies:
+1. First: USER_JOURNEYS (5a) - depends on Phase 1-4
+2. Then: UI_DESIGN_SYSTEM (5b) - depends on 5a
+3. Finally: ACCESSIBILITY (5c) - depends on 5b
+
+Do NOT run these in parallel.
+
 ### Deep Templates (--deep flag)
 
-After Phase 7, these additional templates are generated in `north-star-advisor/docs/architecture/`:
+After Phase 7, these additional templates are generated in `north-star-advisor/docs/architecture/`.
+
+**These CAN run in parallel** - they all depend on Phase 6/7 which is already complete:
 
 | Template | Output Path |
 |----------|-------------|
