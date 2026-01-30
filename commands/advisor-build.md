@@ -19,6 +19,9 @@ Research and generate strategic documents following the North Star methodology. 
 | `--from <N>` | Start from phase N (research runs if not cached) |
 | `--to <N>` | Stop at phase N |
 | `--only <N>` | Regenerate only phase N (research runs if not cached) |
+| `--ux` | Add UX design templates (can be added after initial build) |
+| `--deep` | Add deep architecture templates (can be added after initial build) |
+| `--full` | Add all templates (equivalent to --ux --deep) |
 
 ---
 
@@ -370,15 +373,21 @@ After Phase 7, these additional templates are generated in `north-star-advisor/d
 
 ---
 
-## Step 1: Load State
+## Step 1: Load State and Merge Flags
 
 1. Read `north-star-advisor/.work-in-progress/state.json`
 2. Read `north-star-advisor/.work-in-progress/inputs.yml`
 3. Read `north-star-advisor/.work-in-progress/research/summary.md`
-4. Determine which phases to generate based on:
-   - Flags from advisor (--ux, --deep, --full)
-   - Command options (--from, --to, --only)
-   - Previously completed phases
+4. **Merge command-line flags with stored flags:**
+   - Parse `--ux`, `--deep`, `--full` from command arguments
+   - If `--full`: enable both `--ux` and `--deep`
+   - Combine with flags already in state.json (union, not replace)
+   - Update state.json with merged flags
+5. Determine which phases to generate:
+   - Build full phase list based on merged flags
+   - Subtract `completed_phases` from state.json
+   - Apply `--from`, `--to`, `--only` filters if specified
+   - Result: phases that are enabled but not yet completed
 
 ## Step 2: Check Dependencies
 
@@ -427,8 +436,10 @@ For each phase in order:
 │     Write to north-star-advisor/docs/{path}/{TEMPLATE_NAME}.md │
 │     Extract key outputs to north-star-advisor/.work-in-progress/outputs/{name}.yml │
 │                                                             │
-│  7. Update ai-context.yml                                   │
-│     Add phase-specific fields (see table below)             │
+│  7. Update ai-context.yml (REQUIRED)                        │
+│     For core phases: use "ai-context.yml Updates by Phase"  │
+│     For deep templates: use "Deep Template ai-context.yml   │
+│       Updates" table                                        │
 │     Update _meta.phases_complete array                      │
 │     Update _meta.last_updated timestamp                     │
 │                                                             │
@@ -489,6 +500,17 @@ Address these security concerns in the threat model.
 | 11 | `strategy.recommended_path`, `strategy.trade_offs` |
 | 12 | `roadmap.phase_1`, `roadmap.phase_2`, `roadmap.phase_3` |
 | 13 | `references.docs` (all document paths) |
+
+### Deep Template ai-context.yml Updates (--deep flag)
+
+| Template | Fields Added to ai-context.yml |
+|----------|--------------------------------|
+| PIPELINE_ORCHESTRATION | `architecture.pipeline_stages`, `architecture.handoff_triggers` |
+| RESILIENCE_PATTERNS | `architecture.circuit_breakers`, `architecture.retry_policies`, `architecture.fallback_strategies` |
+| IMPLEMENTATION_SCAFFOLD | `implementation.project_structure`, `implementation.setup_scripts` |
+| OBSERVABILITY | `operations.logging_strategy`, `operations.tracing`, `operations.dashboards` |
+| TESTING_STRATEGY | `testing.unit_coverage`, `testing.integration_tests`, `testing.golden_datasets` |
+| HANDOFF_PROTOCOL | `architecture.delegation_rules`, `architecture.context_passing` |
 
 ---
 
@@ -659,4 +681,13 @@ If validation fails:
 
 # Continue from phase 5
 /northstar:advisor-build --from 5
+
+# Add UX and deep templates after initial build completed
+/northstar:advisor-build --full
+
+# Add only UX templates to existing project
+/northstar:advisor-build --ux
+
+# Add only deep architecture templates to existing project
+/northstar:advisor-build --deep
 ```

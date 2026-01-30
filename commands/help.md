@@ -36,11 +36,14 @@ COMMANDS
 
   /northstar:advisor-build [options]
     Research and generate strategic documents.
-    Runs domain research, then generates 13 documents.
+    Runs domain research, then generates documents.
     Options:
       --from <N>      Start from phase N
       --to <N>        Stop at phase N
       --only <N>      Regenerate only phase N
+      --ux            Add UX templates (can extend existing project)
+      --deep          Add deep architecture templates
+      --full          Add all templates (equivalent to --ux --deep)
 
   /northstar:status
     Show current progress (research, generation phases).
@@ -127,6 +130,9 @@ EXAMPLES
   # Generate only the architecture phase
   /northstar:advisor-build --only 6
 
+  # Add UX and deep templates after initial build
+  /northstar:advisor-build --full
+
   # Check progress
   /northstar:status
 
@@ -136,5 +142,5 @@ EXAMPLES
 MORE INFO
 
   Documentation: https://github.com/AI-Native-Systems/north-star-advisor
-  Author: Patrick Pena / AI Native Systems
+  Author: Patrick Pena / AI Native Systems™
 ```

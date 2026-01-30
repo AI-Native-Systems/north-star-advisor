@@ -39,11 +39,19 @@ Your goal is not to extract information—it's to help the user discover what th
 1. Check if `north-star-advisor/.work-in-progress/state.json` exists
 2. If exists:
    - Read current state
-   - Ask user: "A North Star project already exists. Would you like to:"
-     - Continue existing project (`/northstar:resume`)
-     - Start fresh (overwrites existing)
-   - If "start fresh", proceed to Step 2
-   - If "continue", redirect to `/northstar:resume`
+   - Check if new flags were passed (--ux, --deep, --full)
+   - If new flags AND project has completed phases:
+     - Ask user: "A North Star project already exists. Would you like to:"
+       - Update flags and generate new templates (`/northstar:advisor-build` with merged flags)
+       - Start fresh (overwrites existing)
+     - If "update flags", merge flags into state.json and run `/northstar:advisor-build`
+     - If "start fresh", proceed to Step 2
+   - If no new flags OR no completed phases:
+     - Ask user: "A North Star project already exists. Would you like to:"
+       - Continue existing project (`/northstar:resume`)
+       - Start fresh (overwrites existing)
+     - If "start fresh", proceed to Step 2
+     - If "continue", redirect to `/northstar:resume`
 3. If not exists, proceed to Step 2
 
 ### Step 2: Parse Flags
