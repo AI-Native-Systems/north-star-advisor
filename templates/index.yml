@@ -9,8 +9,6 @@
 #
 # DO NOT hardcode template lists in command files.
 
-version: "1.2.0"
-
 # Summary counts (computed from templates below)
 counts:
   core: 12        # Always generated
