@@ -16,9 +16,11 @@ Begin strategic discovery for a new North Star Advisor project. This command act
 
 | Flag | Description |
 |------|-------------|
-| `--ux` | Include UX design templates (USER_JOURNEYS, UI_DESIGN_SYSTEM, ACCESSIBILITY) |
-| `--deep` | Include deep architecture templates (PIPELINE, RESILIENCE, OBSERVABILITY, etc.) |
-| `--full` | Include all 22 templates (equivalent to --ux --deep) |
+| `--ux` | Include UX design templates (3 templates) |
+| `--deep` | Include deep architecture templates (6 templates) |
+| `--full` | Include all templates (equivalent to --ux --deep) |
+
+**Template counts:** Read `templates/index.yml` for the authoritative list.
 | `--target <path>` | Specify output directory (default: current directory) |
 | `--search-tool <tool>` | Preferred search tool for research (e.g., user defined search tool). Stored in state.json and passed to research agents. |
 
@@ -331,11 +333,11 @@ Project: [application_name]
 Target:  [target_path]/north-star-advisor/docs/
 Flags:   [flags or "core templates only"]
 
-Templates to generate:
+Templates to generate: (see templates/index.yml)
   • 12 core templates (always)
-  • 3 UX templates (--ux)      [if applicable]
-  • 7 deep templates (--deep)  [if applicable]
-  Total: [count] documents
+  • 3 UX templates (--ux)       [if applicable]
+  • 6 deep templates (--deep)   [if applicable]
+  Total: [count from index.yml] documents
 
 Files created:
   • north-star-advisor/ai-context.yml

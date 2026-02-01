@@ -1,0 +1,245 @@
+# North Star Advisor - Template Index
+# SINGLE SOURCE OF TRUTH for all templates
+#
+# All commands MUST read this file to determine:
+# - Which templates exist
+# - Output paths
+# - Phase ordering
+# - Flag requirements
+#
+# DO NOT hardcode template lists in command files.
+
+version: "1.2.0"
+
+# Summary counts (computed from templates below)
+counts:
+  core: 12        # Always generated
+  ux: 3           # Requires --ux flag
+  deep: 6         # Requires --deep flag
+  total_base: 12  # Core only
+  total_ux: 15    # Core + UX
+  total_deep: 18  # Core + Deep
+  total_full: 21  # Core + UX + Deep
+  # Plus ai-context.yml = 22 outputs with --full
+
+# Template definitions
+# Each template specifies:
+#   - phase: Generation order (5a/5b/5c for UX sequence)
+#   - template: Source template file path
+#   - output: Generated document path
+#   - category: core | ux | deep
+#   - flag: null (always) | ux | deep
+#   - depends_on: List of phases that must complete first
+
+templates:
+  # ─────────────────────────────────────────────────────
+  # CORE TEMPLATES (always generated)
+  # ─────────────────────────────────────────────────────
+
+  - name: BRAND_GUIDELINES
+    phase: 1
+    template: templates/core/BRAND_GUIDELINES_TEMPLATE.md
+    output: north-star-advisor/docs/BRAND_GUIDELINES.md
+    category: core
+    flag: null
+    depends_on: []
+
+  - name: NORTHSTAR
+    phase: 2
+    template: templates/core/NORTHSTAR_TEMPLATE.md
+    output: north-star-advisor/docs/NORTHSTAR.md
+    category: core
+    flag: null
+    depends_on: [1]
+
+  - name: COMPETITIVE_LANDSCAPE
+    phase: 3
+    template: templates/core/COMPETITIVE_LANDSCAPE_TEMPLATE.md
+    output: north-star-advisor/docs/COMPETITIVE_LANDSCAPE.md
+    category: core
+    flag: null
+    depends_on: [1, 2]
+
+  - name: NORTHSTAR_EXTRACT
+    phase: 4
+    template: templates/core/NORTHSTAR_EXTRACT_TEMPLATE.md
+    output: north-star-advisor/docs/NORTHSTAR_EXTRACT.md
+    category: core
+    flag: null
+    depends_on: [1, 2, 3]
+
+  # ─────────────────────────────────────────────────────
+  # UX TEMPLATES (--ux flag required)
+  # MUST run sequentially: 5a → 5b → 5c
+  # ─────────────────────────────────────────────────────
+
+  - name: USER_JOURNEYS
+    phase: "5a"
+    template: templates/design/USER_JOURNEYS_TEMPLATE.md
+    output: north-star-advisor/docs/design/USER_JOURNEYS.md
+    category: ux
+    flag: ux
+    depends_on: [1, 2, 3, 4]
+    notes: "Run sequentially - do NOT parallelize UX templates"
+
+  - name: UI_DESIGN_SYSTEM
+    phase: "5b"
+    template: templates/design/UI_DESIGN_SYSTEM_TEMPLATE.md
+    output: north-star-advisor/docs/design/UI_DESIGN_SYSTEM.md
+    category: ux
+    flag: ux
+    depends_on: ["5a"]
+    notes: "Depends on USER_JOURNEYS"
+
+  - name: ACCESSIBILITY
+    phase: "5c"
+    template: templates/design/ACCESSIBILITY_TEMPLATE.md
+    output: north-star-advisor/docs/design/ACCESSIBILITY.md
+    category: ux
+    flag: ux
+    depends_on: ["5b"]
+    notes: "Depends on UI_DESIGN_SYSTEM"
+
+  # ─────────────────────────────────────────────────────
+  # ARCHITECTURE TEMPLATES (core)
+  # ─────────────────────────────────────────────────────
+
+  - name: ARCHITECTURE_BLUEPRINT
+    phase: 6
+    template: templates/core/ARCHITECTURE_BLUEPRINT_TEMPLATE.md
+    output: north-star-advisor/docs/ARCHITECTURE_BLUEPRINT.md
+    category: core
+    flag: null
+    depends_on: [1, 2, 3, 4]  # Also depends on 5a-5c if --ux
+    notes: "Research informs this phase"
+
+  - name: AGENT_PROMPTS
+    phase: 7
+    template: templates/architecture/AGENT_PROMPTS_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/AGENT_PROMPTS.md
+    category: core
+    flag: null
+    depends_on: [6]
+    notes: "Research informs this phase"
+
+  - name: SECURITY_ARCHITECTURE
+    phase: 8
+    template: templates/core/SECURITY_ARCHITECTURE_TEMPLATE.md
+    output: north-star-advisor/docs/SECURITY_ARCHITECTURE.md
+    category: core
+    flag: null
+    depends_on: [6, 7]
+    notes: "Research informs this phase"
+
+  - name: ADR
+    phase: 9
+    template: templates/core/ADR_TEMPLATE.md
+    output: north-star-advisor/docs/ADR.md
+    category: core
+    flag: null
+    depends_on: [6, 7, 8]
+
+  - name: POST_DEPLOYMENT
+    phase: 10
+    template: templates/core/POST_DEPLOYMENT_TEMPLATE.md
+    output: north-star-advisor/docs/POST_DEPLOYMENT.md
+    category: core
+    flag: null
+    depends_on: [6, 7, 8, 9]
+
+  - name: STRATEGIC_RECOMMENDATION
+    phase: 11
+    template: templates/core/STRATEGIC_RECOMMENDATION_TEMPLATE.md
+    output: north-star-advisor/docs/STRATEGIC_RECOMMENDATION.md
+    category: core
+    flag: null
+    depends_on: [1, 2, 3, 4, 6, 7, 8, 9, 10]
+
+  - name: ACTION_ROADMAP
+    phase: 12
+    template: templates/core/ACTION_ROADMAP_TEMPLATE.md
+    output: north-star-advisor/docs/ACTION_ROADMAP.md
+    category: core
+    flag: null
+    depends_on: [11]
+
+  - name: INDEX
+    phase: 13
+    template: templates/core/INDEX_TEMPLATE.md
+    output: north-star-advisor/docs/INDEX.md
+    category: core
+    flag: null
+    depends_on: "all"
+    notes: "Generated last, references all other documents"
+
+  # ─────────────────────────────────────────────────────
+  # DEEP ARCHITECTURE TEMPLATES (--deep flag required)
+  # Can run in parallel after phase 7
+  # ─────────────────────────────────────────────────────
+
+  - name: PIPELINE_ORCHESTRATION
+    phase: "7d"
+    template: templates/architecture/PIPELINE_ORCHESTRATION_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/PIPELINE_ORCHESTRATION.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+  - name: RESILIENCE_PATTERNS
+    phase: "7d"
+    template: templates/architecture/RESILIENCE_PATTERNS_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/RESILIENCE_PATTERNS.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+  - name: IMPLEMENTATION_SCAFFOLD
+    phase: "7d"
+    template: templates/architecture/IMPLEMENTATION_SCAFFOLD_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/IMPLEMENTATION_SCAFFOLD.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+  - name: OBSERVABILITY
+    phase: "7d"
+    template: templates/architecture/OBSERVABILITY_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/OBSERVABILITY.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+  - name: TESTING_STRATEGY
+    phase: "7d"
+    template: templates/architecture/TESTING_STRATEGY_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/TESTING_STRATEGY.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+  - name: HANDOFF_PROTOCOL
+    phase: "7d"
+    template: templates/architecture/HANDOFF_PROTOCOL_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/HANDOFF_PROTOCOL.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates"
+
+# ─────────────────────────────────────────────────────
+# ADDITIONAL OUTPUTS (not templates)
+# ─────────────────────────────────────────────────────
+
+outputs:
+  - name: ai-context.yml
+    path: north-star-advisor/ai-context.yml
+    description: "Progressive strategic context, updated after each phase"
+
+  - name: research/summary.md
+    path: north-star-advisor/.work-in-progress/research/summary.md
+    description: "Synthesized research from 4 parallel agents"

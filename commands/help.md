@@ -86,24 +86,19 @@ RESEARCH PHASE
 
   Research is cached for 24 hours.
 
-GENERATION PHASES
+GENERATION PHASES (see templates/index.yml for authoritative list)
 
-  Phase 1:  BRAND_GUIDELINES         Identity, positioning, voice
-  Phase 2:  NORTHSTAR                Metric, personas, scope
-  Phase 3:  COMPETITIVE_LANDSCAPE    Market shifts, competitors
-  Phase 4:  NORTHSTAR_EXTRACT        Axioms, non-goals (synthesis)
-  Phase 5:  [--ux] Design templates
-            5a: USER_JOURNEYS        Emotional journey maps
-            5b: UI_DESIGN_SYSTEM     Design tokens, components
-            5c: ACCESSIBILITY        WCAG 2.1 AA patterns
-  Phase 6:  ARCHITECTURE_BLUEPRINT   Agent topology, tech stack
-  Phase 7:  AGENT_PROMPTS            Per-agent contracts
-  Phase 8:  SECURITY_ARCHITECTURE    Threats, auth, safety
-  Phase 9:  ADR                      Architecture decisions
-  Phase 10: POST_DEPLOYMENT          Monitoring, maintenance
-  Phase 11: STRATEGIC_RECOMMENDATION Paths, trade-offs
-  Phase 12: ACTION_ROADMAP           30-90 day actions
-  Phase 13: INDEX                    Documentation hub
+  Core templates (always generated):
+    Phases 1-4:   Strategy & positioning
+    Phases 6-13:  Architecture & implementation
+
+  UX templates (--ux flag):
+    Phase 5a-5c:  Design system & accessibility
+
+  Deep templates (--deep flag):
+    Phase 7d:     Advanced architecture patterns
+
+  Counts: 12 core + 3 ux + 6 deep = 21 total (+ ai-context.yml)
 
 OUTPUT STRUCTURE
 

@@ -8,6 +8,15 @@ Display current generation progress and next steps.
 
 ---
 
+## Template Source of Truth
+
+**CRITICAL:** Read `templates/index.yml` for the authoritative template list.
+
+- **NEVER** display document names not in `templates/index.yml`
+- Use `counts` section from index.yml for progress calculations
+
+---
+
 ## Usage
 
 ```
@@ -56,45 +65,26 @@ Research: ✓ Complete (cached 2 hours ago)
   • Architecture:  Hybrid orchestration pattern
   • Pitfalls:      3 security concerns identified
 
-GENERATION PROGRESS
+GENERATION PROGRESS (from templates/index.yml)
 ───────────────────────────────────────────────────────
 
-Phase 1:  BRAND_GUIDELINES         ✓ Complete
-Phase 2:  NORTHSTAR                ✓ Complete
-Phase 3:  COMPETITIVE_LANDSCAPE    ✓ Complete
-Phase 4:  NORTHSTAR_EXTRACT        ✓ Complete
-Phase 5a: USER_JOURNEYS            ○ Pending (--ux)
-Phase 5b: UI_DESIGN_SYSTEM         ○ Pending (--ux)
-Phase 5c: ACCESSIBILITY            ○ Pending (--ux)
-Phase 6:  ARCHITECTURE_BLUEPRINT   ▶ In Progress
-Phase 7:  AGENT_PROMPTS            ○ Pending
-Phase 8:  SECURITY_ARCHITECTURE    ○ Pending
-Phase 9:  ADR                      ○ Pending
-Phase 10: POST_DEPLOYMENT          ○ Pending
-Phase 11: STRATEGIC_RECOMMENDATION ○ Pending
-Phase 12: ACTION_ROADMAP           ○ Pending
-Phase 13: INDEX                    ○ Pending
+[List all templates from templates/index.yml]
+[Format: Phase N: TEMPLATE_NAME    [status]]
+[Filter by flag based on project settings]
+[Status: ✓ Complete | ▶ In Progress | ○ Pending | ⊘ Skipped]
 
-Progress: ████████░░░░░░░░░░░░ 5/15 (33%)
+Progress: [progress bar] [completed]/[total] ([percent]%)
 
 VALIDATION STATUS
 ───────────────────────────────────────────────────────
 
-✓ Phase 1: All gates passed
-✓ Phase 2: All gates passed
-✓ Phase 3: All gates passed
-✓ Phase 4: All gates passed
-⚠ Phase 6: In progress
+[List validation status for completed phases]
 
-OUTPUTS
+OUTPUTS (actual files in north-star-advisor/docs/)
 ───────────────────────────────────────────────────────
 
-north-star-advisor/docs/
-├── BRAND_GUIDELINES.md          (2.3 KB)
-├── NORTHSTAR.md                 (4.1 KB)
-├── COMPETITIVE_LANDSCAPE.md     (5.7 KB)
-├── NORTHSTAR_EXTRACT.md         (1.8 KB)
-└── ARCHITECTURE_BLUEPRINT.md    (partial)
+[Glob north-star-advisor/docs/**/*.md and list actual files]
+[Only show files that exist - do not list expected files]
 
 LAST CHECKPOINT
 ───────────────────────────────────────────────────────

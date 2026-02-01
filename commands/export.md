@@ -22,34 +22,20 @@ Package generated strategic documents and AI context into a shareable zip file.
 
 ## What Gets Included
 
+**Note:** Document names come from `templates/index.yml`. Glob actual files from `north-star-advisor/docs/`.
+
 ```
 north-star-advisor-export.zip
 ├── ai-context.yml                    # Strategic context for Claude Code
 └── docs/
-    ├── BRAND_GUIDELINES.md
-    ├── NORTHSTAR.md
-    ├── COMPETITIVE_LANDSCAPE.md
-    ├── NORTHSTAR_EXTRACT.md
-    ├── ARCHITECTURE_BLUEPRINT.md
-    ├── SECURITY_ARCHITECTURE.md
-    ├── ADR.md
-    ├── POST_DEPLOYMENT.md
-    ├── STRATEGIC_RECOMMENDATION.md
-    ├── ACTION_ROADMAP.md
-    ├── INDEX.md
+    ├── [core templates from index.yml where flag: null]
     ├── design/                       # If --ux was used
-    │   ├── USER_JOURNEYS.md
-    │   ├── UI_DESIGN_SYSTEM.md
-    │   └── ACCESSIBILITY.md
-    └── architecture/                 # If --deep was used
-        ├── AGENT_PROMPTS.md
-        ├── PIPELINE_ORCHESTRATION.md
-        ├── RESILIENCE_PATTERNS.md
-        ├── IMPLEMENTATION_SCAFFOLD.md
-        ├── OBSERVABILITY.md
-        ├── TESTING_STRATEGY.md
-        └── HANDOFF_PROTOCOL.md
+    │   └── [templates from index.yml where flag: ux]
+    └── architecture/
+        └── [templates from index.yml where flag: deep or AGENT_PROMPTS]
 ```
+
+Structure depends on which flags were enabled. Only include files that actually exist.
 
 ## What Gets Excluded
 

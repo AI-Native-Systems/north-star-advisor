@@ -1,10 +1,12 @@
 ---
-description: Research and generate 22 strategic documents. Runs domain research, then generates documents informed by findings.
+description: Research and generate strategic documents. Runs domain research, then generates documents informed by findings.
 ---
 
 # /northstar:advisor-build
 
-Research and generate strategic documents following the North Star methodology. This command first conducts domain research, then generates 13 strategic documents informed by the research findings.
+Research and generate strategic documents following the North Star methodology. This command first conducts domain research, then generates documents informed by the research findings.
+
+**Template Source of Truth:** `templates/index.yml` defines all templates, phases, and dependencies. Read this file to determine which documents to generate based on flags.
 
 ---
 
@@ -31,6 +33,108 @@ Research and generate strategic documents following the North Star methodology. 
 - Project must be initialized with `/northstar:advisor`
 - `north-star-advisor/.work-in-progress/state.json` must exist with `understanding_verified: true`
 - `north-star-advisor/.work-in-progress/inputs.yml` must contain required inputs
+
+---
+
+## Step 0: Initialize and Confirm
+
+**This step is REQUIRED before any generation.**
+
+### 0.1 Load Template Manifest
+
+```
+1. Read templates/index.yml (SINGLE SOURCE OF TRUTH)
+2. Parse all templates into memory
+3. Note the counts: core=12, ux=3, deep=6
+```
+
+### 0.2 Load Project State
+
+```
+1. Read north-star-advisor/.work-in-progress/state.json
+2. Read north-star-advisor/.work-in-progress/inputs.yml
+3. Get current flags: ux, deep, search_tool
+4. Get completed_phases array
+```
+
+### 0.3 Merge Command Flags
+
+```
+1. Parse command-line flags: --ux, --deep, --full, --search-tool, --from, --to, --only
+2. Merge with stored flags (union, not replace)
+3. If --full: enable both ux and deep
+4. If --search-tool provided: override stored value
+```
+
+### 0.4 Display Build Plan
+
+**ALWAYS display this before proceeding.**
+
+**IMPORTANT:** Read template names from `templates/index.yml`. The example below is illustrative - use actual names from index.yml.
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ NORTH STAR ADVISOR ► BUILD PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Project: [application_name]
+Search Tool: [search_tool or "WebSearch (default)"]
+
+FLAGS
+───────────────────────────────────────────────────────
+
+  --ux:    [enabled/disabled] ([count from index.yml] UX templates)
+  --deep:  [enabled/disabled] ([count from index.yml] architecture templates)
+
+TEMPLATES TO GENERATE (from templates/index.yml)
+───────────────────────────────────────────────────────
+
+Core ([count]):
+  [list template names from index.yml where flag: null]
+
+UX ([count]): [if --ux enabled, else "Not enabled"]
+  [list template names from index.yml where flag: ux]
+
+Deep ([count]): [if --deep enabled, else "Not enabled"]
+  [list template names from index.yml where flag: deep]
+
+Total: [X] documents + ai-context.yml
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPTIONS
+───────────────────────────────────────────────────────
+
+Available flags you can add:
+  --ux          Add UX design templates
+  --deep        Add deep architecture templates
+  --full        Add all templates (--ux + --deep)
+  --search-tool Use custom search tool (e.g., pplx)
+
+Ready to proceed?
+```
+
+### 0.5 Confirm with User
+
+Use `AskUserQuestion` with options:
+- "Yes, start generation"
+- "Add --ux templates"
+- "Add --deep templates"
+- "Add --full (all templates)"
+- "Change search tool"
+
+If user selects a flag option:
+1. Update state.json with new flags
+2. Re-display build plan with updated counts
+3. Ask again
+
+If user selects "Change search tool":
+1. Ask: "Enter search tool name (e.g., pplx, mcp__pplx__perplexity-search):"
+2. Update state.json with search_tool value
+3. Re-display build plan
+4. Ask again
+
+Only proceed to Step 1 (Research) after user confirms "Yes, start generation".
 
 ---
 
@@ -344,47 +448,22 @@ Update state.json: `research_complete: true`
 
 ## Generation Phases
 
-| Phase | Template | Output | Dependencies |
-|-------|----------|--------|--------------|
-| 1 | BRAND_GUIDELINES | north-star-advisor/docs/BRAND_GUIDELINES.md | inputs.yml |
-| 2 | NORTHSTAR | north-star-advisor/docs/NORTHSTAR.md | Phase 1 |
-| 3 | COMPETITIVE_LANDSCAPE | north-star-advisor/docs/COMPETITIVE_LANDSCAPE.md | Phase 1, 2 |
-| 4 | NORTHSTAR_EXTRACT | north-star-advisor/docs/NORTHSTAR_EXTRACT.md | Phase 1, 2, 3 |
-| 5a | USER_JOURNEYS | north-star-advisor/docs/design/USER_JOURNEYS.md | Phase 1-4 (--ux only) |
-| 5b | UI_DESIGN_SYSTEM | north-star-advisor/docs/design/UI_DESIGN_SYSTEM.md | Phase 5a (--ux only) |
-| 5c | ACCESSIBILITY | north-star-advisor/docs/design/ACCESSIBILITY.md | Phase 5b (--ux only) |
-| 6 | ARCHITECTURE_BLUEPRINT | north-star-advisor/docs/ARCHITECTURE_BLUEPRINT.md | Phase 1-4 (+ 5 if --ux), Research |
-| 7 | AGENT_PROMPTS | north-star-advisor/docs/architecture/AGENT_PROMPTS.md | Phase 6, Research |
-| 8 | SECURITY_ARCHITECTURE | north-star-advisor/docs/SECURITY_ARCHITECTURE.md | Phase 6, 7, Research |
-| 9 | ADR | north-star-advisor/docs/ADR.md | Phase 6, 7, 8 |
-| 10 | POST_DEPLOYMENT | north-star-advisor/docs/POST_DEPLOYMENT.md | Phase 6-9 |
-| 11 | STRATEGIC_RECOMMENDATION | north-star-advisor/docs/STRATEGIC_RECOMMENDATION.md | Phase 1-10 |
-| 12 | ACTION_ROADMAP | north-star-advisor/docs/ACTION_ROADMAP.md | Phase 11 |
-| 13 | INDEX | north-star-advisor/docs/INDEX.md | All phases |
+**CRITICAL:** Read `templates/index.yml` for the authoritative template list, phases, output paths, and dependencies. Do NOT use hardcoded document names.
 
-### UX Templates Execution Order (--ux flag)
+```
+1. Read templates/index.yml
+2. Filter by flag: include templates where flag is null (core), ux, or deep based on project flags
+3. Sort by phase number
+4. Generate in dependency order
+```
 
-**IMPORTANT**: UX templates MUST be generated SEQUENTIALLY due to dependencies:
-1. First: USER_JOURNEYS (5a) - depends on Phase 1-4
-2. Then: UI_DESIGN_SYSTEM (5b) - depends on 5a
-3. Finally: ACCESSIBILITY (5c) - depends on 5b
+### Execution Rules
 
-Do NOT run these in parallel.
+**UX Templates (--ux flag):** MUST run SEQUENTIALLY (5a → 5b → 5c) due to dependencies. Do NOT parallelize.
 
-### Deep Templates (--deep flag)
+**Deep Templates (--deep flag):** CAN run in PARALLEL after Phase 7 completes. All have the same dependencies (Phase 6/7).
 
-After Phase 7, these additional templates are generated in `north-star-advisor/docs/architecture/`.
-
-**These CAN run in parallel** - they all depend on Phase 6/7 which is already complete:
-
-| Template | Output Path |
-|----------|-------------|
-| PIPELINE_ORCHESTRATION | north-star-advisor/docs/architecture/PIPELINE_ORCHESTRATION.md |
-| RESILIENCE_PATTERNS | north-star-advisor/docs/architecture/RESILIENCE_PATTERNS.md |
-| IMPLEMENTATION_SCAFFOLD | north-star-advisor/docs/architecture/IMPLEMENTATION_SCAFFOLD.md |
-| OBSERVABILITY | north-star-advisor/docs/architecture/OBSERVABILITY.md |
-| TESTING_STRATEGY | north-star-advisor/docs/architecture/TESTING_STRATEGY.md |
-| HANDOFF_PROTOCOL | north-star-advisor/docs/architecture/HANDOFF_PROTOCOL.md |
+**Core Templates:** Run in phase order (1 → 2 → 3 → ... → 13).
 
 ---
 
@@ -459,12 +538,35 @@ For each phase in order:
 │     Update _meta.phases_complete array                      │
 │     Update _meta.last_updated timestamp                     │
 │                                                             │
-│  8. Update State & Checkpoint                               │
-│     Add phase to completed_phases                           │
-│     Update phase_status                                     │
-│     Save checkpoint                                         │
+│  8. Verify & Checkpoint (REQUIRED)                          │
+│     a. Verify output file exists at template.output path    │
+│     b. Verify file size > 0 bytes                           │
+│     c. If verification fails:                               │
+│        - Display error: "Phase {N} verification failed"     │
+│        - Ask user: "Retry generation?"                      │
+│        - Do NOT proceed until file verified                 │
+│     d. Write checkpoint file:                               │
+│        north-star-advisor/.work-in-progress/checkpoints/    │
+│        checkpoint-phase-{N}.json                            │
+│     e. Update state.json:                                   │
+│        - Add phase to completed_phases                      │
+│        - Set phase_status[N] = "complete"                   │
+│        - Set phase_outputs[N] = output_path                 │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
+
+### Checkpoint File Format
+
+```json
+// north-star-advisor/.work-in-progress/checkpoints/checkpoint-phase-{N}.json
+{
+  "phase": "{N}",
+  "template_name": "{TEMPLATE_NAME}",
+  "output_path": "{template.output from index.yml}",
+  "generated_at": "{ISO-8601 timestamp}",
+  "verified": true,
+  "file_size_bytes": {size}
+}
 ```
 
 ### Research Integration in Generation
@@ -532,50 +634,114 @@ Address these security concerns in the threat model.
 
 ## Step 4: Progress Display
 
-During generation, display:
+During generation, display progress. **Use template names from `templates/index.yml` only.**
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  NORTH STAR ADVISOR ► GENERATING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Phase 3/13: COMPETITIVE_LANDSCAPE
+Phase [N]/[total]: [template.name from index.yml]
 ├── Loading template...
-├── Researching competitors...
 ├── Generating content...
 ├── Validating output...
 ├── Updating ai-context.yml...
 └── ✓ Complete
 
-Progress: ███████░░░░░░░░░░░░░ 3/13 (23%)
+Progress: ███████░░░░░░░░░░░░░ [N]/[total] ([percent]%)
 
-Next: Phase 4 - NORTHSTAR_EXTRACT
+Next: Phase [N+1] - [next template.name from index.yml]
 ```
 
-## Step 5: Completion
+## Step 5: Final Cross-Check (REQUIRED)
 
-After all phases complete:
+**Before marking generation complete, validate ALL outputs against `templates/index.yml`.**
+
+### Cross-Check Procedure
+
+```
+1. Read templates/index.yml
+2. Determine expected templates based on project flags:
+   - Always include: templates where flag: null (core)
+   - If ux enabled: include templates where flag: ux
+   - If deep enabled: include templates where flag: deep
+3. For each expected template:
+   a. Check if output file exists at template.output path
+   b. Check if file has content (size > 0 bytes)
+   c. Record: { name, expected_path, exists, size }
+4. Calculate: expected_count, found_count, missing_list
+5. Display cross-check results (see below)
+6. If any missing:
+   - Ask user: "Regenerate missing documents?"
+   - If yes: regenerate ONLY the missing documents
+   - If no: warn and mark generation as incomplete
+7. Only proceed to completion if ALL expected files exist
+```
+
+### Cross-Check Display
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ NORTH STAR ADVISOR ► FINAL CROSS-CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Validating outputs against templates/index.yml...
+
+Expected: [X] documents (core: 12, ux: [0|3], deep: [0|6])
+Found:    [Y] documents
+
+CORE TEMPLATES
+───────────────────────────────────────────────────────
+✓ BRAND_GUIDELINES.md              (4.2 KB)
+✓ NORTHSTAR.md                     (3.1 KB)
+✗ COMPETITIVE_LANDSCAPE.md         (MISSING)
+...
+
+UX TEMPLATES [if enabled]
+───────────────────────────────────────────────────────
+✓ USER_JOURNEYS.md                 (2.8 KB)
+...
+
+DEEP TEMPLATES [if enabled]
+───────────────────────────────────────────────────────
+✓ PIPELINE_ORCHESTRATION.md        (5.1 KB)
+...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ RESULT: [PASS ✓ | FAIL ✗ - N missing]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Update state.json with Cross-Check Results
+
+```json
+{
+  "final_crosscheck": {
+    "passed": true|false,
+    "checked_at": "{ISO-8601 timestamp}",
+    "expected_count": 12,
+    "found_count": 12,
+    "missing": []
+  }
+}
+```
+
+---
+
+## Step 6: Completion
+
+**Only display after cross-check passes.** List only documents from `templates/index.yml`.
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  NORTH STAR ADVISOR ► COMPLETE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Generated: 13 documents
+Generated: [count] documents
 Location:  north-star-advisor/docs/
 
-Documents:
-  ✓ BRAND_GUIDELINES.md
-  ✓ NORTHSTAR.md
-  ✓ COMPETITIVE_LANDSCAPE.md
-  ✓ NORTHSTAR_EXTRACT.md
-  ✓ ARCHITECTURE_BLUEPRINT.md
-  ✓ SECURITY_ARCHITECTURE.md
-  ✓ ADR.md
-  ✓ POST_DEPLOYMENT.md
-  ✓ STRATEGIC_RECOMMENDATION.md
-  ✓ ACTION_ROADMAP.md
-  ✓ INDEX.md
+Documents: (from templates/index.yml)
+  [list all generated template.name with ✓ prefix]
 
 Strategic context: north-star-advisor/ai-context.yml (complete)
 Research summary:  north-star-advisor/.work-in-progress/research/summary.md
