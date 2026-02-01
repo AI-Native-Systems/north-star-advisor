@@ -272,6 +272,15 @@ success_metric: "[metric]"
 phase_decisions: {}
 ```
 
+### Find Plugin Index Path
+
+Before creating state.json, locate the template index:
+
+```
+1. Use Glob to find: **/northstar/**/templates/index.yml
+2. Store the absolute path for use in state.json
+```
+
 ### Create state.json
 
 ```json
@@ -279,6 +288,7 @@ phase_decisions: {}
   "project_id": "<generated-uuid>",
   "project_name": "<application_name>",
   "target_path": "<resolved-path>",
+  "plugin_index_path": "<absolute-path-to-templates/index.yml>",
   "flags": ["--ux", "--deep"],
   "search_tool": "<user-specified-tool-or-null>",
   "understanding_verified": true,

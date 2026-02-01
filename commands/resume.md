@@ -12,6 +12,11 @@ Resume generation from the last checkpoint after interruption.
 
 **CRITICAL:** Read `templates/index.yml` for the authoritative template list.
 
+To find it:
+1. Check `state.json` for `plugin_index_path` (cached location)
+2. If not found, use Glob: `**/northstar/**/templates/index.yml`
+3. Update `state.json` with found path for future use
+
 - **NEVER** hallucinate document names not in `templates/index.yml`
 - **ALWAYS** read this file to determine expected vs generated documents
 - Filter templates by `flag` field based on project's stored flags (ux, deep)

@@ -6,7 +6,12 @@ description: Research and generate strategic documents. Runs domain research, th
 
 Research and generate strategic documents following the North Star methodology. This command first conducts domain research, then generates documents informed by the research findings.
 
-**Template Source of Truth:** `templates/index.yml` defines all templates, phases, and dependencies. Read this file to determine which documents to generate based on flags.
+**Template Source of Truth:** `templates/index.yml` defines all templates, phases, output paths, and dependencies.
+
+To find it:
+1. Check `state.json` for `plugin_index_path` (cached location)
+2. If not found, use Glob: `**/northstar/**/templates/index.yml`
+3. Update `state.json` with found path for future use
 
 ---
 
@@ -520,7 +525,7 @@ For each phase in order:
 │  4. Spawn Generator Agent                                   │
 │     Use Task tool with northstar-generator agent            │
 │     Provide: template_path, output_path, inputs, cross-refs │
-│     output_path MUST be: north-star-advisor/docs/{...}.md   │
+│     output_path MUST use template.output from index.yml     │
 │                                                             │
 │  5. Validate Output                                         │
 │     Spawn northstar-validator agent                         │
@@ -529,7 +534,8 @@ For each phase in order:
 │     BLOCKING: failures stop generation                      │
 │                                                             │
 │  6. Write Output                                            │
-│     Write to north-star-advisor/docs/{path}/{TEMPLATE_NAME}.md │
+│     Write to template.output path from index.yml            │
+│     Create parent directories if needed (docs/design/, etc) │
 │     Extract key outputs to north-star-advisor/.work-in-progress/outputs/{name}.yml │
 │                                                             │
 │  7. Update ai-context.yml (REQUIRED)                        │
