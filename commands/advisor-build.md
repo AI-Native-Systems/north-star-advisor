@@ -23,7 +23,7 @@ To find it:
 
 | Option | Description |
 |--------|-------------|
-| `--ux` | Add UX design templates (3 templates). Updates state.json. |
+| `--ux` | Add UX design templates (4 templates). Updates state.json. |
 | `--deep` | Add deep architecture templates (6 templates). Updates state.json. |
 | `--full` | Enable all templates (--ux + --deep). Updates state.json. |
 | `--search-tool <tool>` | Override search tool. Updates state.json. |
@@ -60,7 +60,7 @@ To find it:
 ```
 1. Read templates/index.yml at plugin_index_path (SINGLE SOURCE OF TRUTH)
 2. Parse all templates into memory
-3. Note the counts: core=12, ux=3, deep=6
+3. Note the counts: core=12, ux=4, deep=6
 ```
 
 If `plugin_index_path` is missing from state.json:
@@ -472,7 +472,7 @@ Update state.json: `research_complete: true`
 
 ### Execution Rules
 
-**UX Templates (--ux flag):** MUST run SEQUENTIALLY (5a → 5b → 5c) due to dependencies. Do NOT parallelize.
+**UX Templates (--ux flag):** MUST run SEQUENTIALLY (5a → 5b → 5c → 5d) due to dependencies. Do NOT parallelize.
 
 **Deep Templates (--deep flag):** CAN run in PARALLEL after Phase 7 completes. All have the same dependencies (Phase 6/7).
 
@@ -703,7 +703,7 @@ Next: Phase [N+1] - [next template.name from index.yml]
 
 Validating outputs against templates/index.yml...
 
-Expected: [X] documents (core: 12, ux: [0|3], deep: [0|6])
+Expected: [X] documents (core: 12, ux: [0|4], deep: [0|6])
 Found:    [Y] documents
 
 CORE TEMPLATES

@@ -82,6 +82,7 @@
 │  │  • UI_DESIGN_SYSTEM.md — Design tokens, components, colors        │    │
 │  │  • USER_JOURNEYS.md — Emotional journey maps, friction points     │    │
 │  │  • ACCESSIBILITY.md — WCAG 2.1 AA, screen readers, testing        │    │
+│  │  • WIREFRAMES.md — ASCII wireframes, brand-aligned screen specs   │    │
 │  └───────────────────────────────────────────────────────────────────┘    │
 │                              │                                            │
 │                              ▼                                            │
@@ -168,12 +169,19 @@ BRAND_GUIDELINES.md (Identity)
     │   • Error recovery flows
     │   • Emotional state mapping
     │
-    └── design/ACCESSIBILITY.md
-        • WCAG 2.1 AA compliance checklist
-        • Screen reader patterns for streaming UI
-        • Keyboard navigation & focus management
-        • Cognitive load mitigation
-        • Accessibility testing protocol
+    ├── design/ACCESSIBILITY.md
+    │   • WCAG 2.1 AA compliance checklist
+    │   • Screen reader patterns for streaming UI
+    │   • Keyboard navigation & focus management
+    │   • Cognitive load mitigation
+    │   • Accessibility testing protocol
+    │
+    └── design/WIREFRAMES.md
+        • ASCII wireframes for core screens
+        • Component specifications per screen
+        • Brand voice validation checklists
+        • Per-screen accessibility requirements
+        • Implementation priority (P0/P1/P2)
 ```
 
 ---
@@ -202,6 +210,7 @@ BRAND_GUIDELINES.md (Identity)
 | [design/UI_DESIGN_SYSTEM.md](design/UI_DESIGN_SYSTEM.md) | 2 | Design tokens | CSS variables, components, colors |
 | [design/USER_JOURNEYS.md](design/USER_JOURNEYS.md) | 2 | User experience | Journey mapping, friction points |
 | [design/ACCESSIBILITY.md](design/ACCESSIBILITY.md) | 2 | Inclusive design | WCAG 2.1 AA, screen readers, testing |
+| [design/WIREFRAMES.md](design/WIREFRAMES.md) | 2 | Screen specifications | ASCII wireframes, brand-aligned layouts |
 
 ---
 
@@ -229,7 +238,7 @@ BRAND_GUIDELINES.md (Identity - Step 1)
          ├──► NORTHSTAR_EXTRACT.md (Design DNA - Step 4)
          │
          ├──► design/*.md (User Experience - Step 5, with --ux flag)
-         │    USER_JOURNEYS → UI_DESIGN_SYSTEM, ACCESSIBILITY
+         │    USER_JOURNEYS → UI_DESIGN_SYSTEM → ACCESSIBILITY → WIREFRAMES
          │
          ├──► ARCHITECTURE_BLUEPRINT.md (Implementation - Step 6)
          │    │
@@ -272,6 +281,7 @@ BRAND_GUIDELINES.md (Identity - Step 1)
 | design/UI_DESIGN_SYSTEM.md | [Draft/Active] | [Date] |
 | design/USER_JOURNEYS.md | [Draft/Active] | [Date] |
 | design/ACCESSIBILITY.md | [Draft/Active] | [Date] |
+| design/WIREFRAMES.md | [Draft/Active] | [Date] |
 
 ---
 

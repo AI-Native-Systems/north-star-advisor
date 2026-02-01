@@ -43,13 +43,13 @@ Documents in the North Star methodology are interconnected. Each document builds
     ┌────┴────┐ (--ux flag)
     │         │
     ▼         ▼
-┌────────┐ ┌────────┐ ┌────────┐
-│ 5a.    │ │ 5b. UI │ │ 5c.    │
-│ USER   │→│ DESIGN │→│ ACCESS │
-│ JRNYS  │ │ SYSTEM │ │ IBILITY│
-└────┬───┘ └───┬────┘ └───┬────┘
-     │         │          │
-     └─────────┴──────────┘
+┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐
+│ 5a.    │ │ 5b. UI │ │ 5c.    │ │ 5d.    │
+│ USER   │→│ DESIGN │→│ ACCESS │→│ WIRE   │
+│ JRNYS  │ │ SYSTEM │ │ IBILITY│ │ FRAMES │
+└────┬───┘ └───┬────┘ └───┬────┘ └───┬────┘
+     │         │          │          │
+     └─────────┴──────────┴──────────┘
                │
                ▼
       ┌─────────────────┐

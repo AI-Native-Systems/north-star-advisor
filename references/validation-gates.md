@@ -154,6 +154,42 @@ G3.5:
 | G5c.3 | Screen reader patterns | WARNING | ARIA guidelines included |
 | G5c.4 | Testing protocol | WARNING | Accessibility testing plan |
 
+### 5d: WIREFRAMES
+
+| Gate | Rule | Severity | Check |
+|------|------|----------|-------|
+| G5d.1 | At least 5 core screens | BLOCKING | `wireframes.core_screens.length >= 5` |
+| G5d.2 | Design tokens referenced | BLOCKING | References `ui.css_tokens` from UI_DESIGN_SYSTEM |
+| G5d.3 | Accessibility per screen | BLOCKING | Each screen has accessibility checklist |
+| G5d.4 | Brand voice validation | BLOCKING | Brand validation checklist present per screen |
+| G5d.5 | Implementation priority | BLOCKING | P0/P1/P2 sections present |
+| G5d.6 | Banned elements listed | WARNING | Kill list section present |
+| G5d.7 | Emotional states annotated | WARNING | Screens reference journey emotional states |
+
+### G5d Failure Messages
+
+```yaml
+G5d.1:
+  message: "Only {count} core screens found (minimum 5 required)"
+  fix: "Add ASCII wireframes for at least 5 core screens"
+
+G5d.2:
+  message: "Design tokens not referenced"
+  fix: "Reference tokens from UI_DESIGN_SYSTEM.md (e.g., --color-accent, --space-4)"
+
+G5d.3:
+  message: "Screen '{screen}' missing accessibility checklist"
+  fix: "Add accessibility requirements section to each screen wireframe"
+
+G5d.4:
+  message: "Brand voice validation missing"
+  fix: "Add brand voice validation checklist to each screen"
+
+G5d.5:
+  message: "Implementation priority not defined"
+  fix: "Add P0 (MVP), P1 (Core), P2 (Polish) priority sections"
+```
+
 ---
 
 ## Phase 6: ARCHITECTURE_BLUEPRINT

@@ -93,12 +93,12 @@ GENERATION PHASES (see templates/index.yml for authoritative list)
     Phases 6-13:  Architecture & implementation
 
   UX templates (--ux flag):
-    Phase 5a-5c:  Design system & accessibility
+    Phase 5a-5d:  Design system, accessibility & wireframes
 
   Deep templates (--deep flag):
     Phase 7d:     Advanced architecture patterns
 
-  Counts: 12 core + 3 ux + 6 deep = 21 total (+ ai-context.yml)
+  Counts: 12 core + 4 ux + 6 deep = 22 total (+ ai-context.yml)
 
 OUTPUT STRUCTURE
 

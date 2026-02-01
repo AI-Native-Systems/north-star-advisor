@@ -12,17 +12,17 @@
 # Summary counts (computed from templates below)
 counts:
   core: 12        # Always generated
-  ux: 3           # Requires --ux flag
+  ux: 4           # Requires --ux flag
   deep: 6         # Requires --deep flag
   total_base: 12  # Core only
-  total_ux: 15    # Core + UX
+  total_ux: 16    # Core + UX
   total_deep: 18  # Core + Deep
-  total_full: 21  # Core + UX + Deep
-  # Plus ai-context.yml = 22 outputs with --full
+  total_full: 22  # Core + UX + Deep
+  # Plus ai-context.yml = 23 outputs with --full
 
 # Template definitions
 # Each template specifies:
-#   - phase: Generation order (5a/5b/5c for UX sequence)
+#   - phase: Generation order (5a/5b/5c/5d for UX sequence)
 #   - template: Source template file path
 #   - output: Generated document path
 #   - category: core | ux | deep
@@ -68,7 +68,7 @@ templates:
 
   # ─────────────────────────────────────────────────────
   # UX TEMPLATES (--ux flag required)
-  # MUST run sequentially: 5a → 5b → 5c
+  # MUST run sequentially: 5a → 5b → 5c → 5d
   # ─────────────────────────────────────────────────────
 
   - name: USER_JOURNEYS
@@ -98,6 +98,15 @@ templates:
     depends_on: ["5b"]
     notes: "Depends on UI_DESIGN_SYSTEM"
 
+  - name: WIREFRAMES
+    phase: "5d"
+    template: templates/design/WIREFRAMES_TEMPLATE.md
+    output: north-star-advisor/docs/design/WIREFRAMES.md
+    category: ux
+    flag: ux
+    depends_on: ["5a", "5b", "5c"]
+    notes: "Synthesizes journeys, design system, and accessibility into visual specs"
+
   # ─────────────────────────────────────────────────────
   # ARCHITECTURE TEMPLATES (core)
   # ─────────────────────────────────────────────────────
@@ -108,7 +117,7 @@ templates:
     output: north-star-advisor/docs/ARCHITECTURE_BLUEPRINT.md
     category: core
     flag: null
-    depends_on: [1, 2, 3, 4]  # Also depends on 5a-5c if --ux
+    depends_on: [1, 2, 3, 4]  # Also depends on 5a-5d if --ux
     notes: "Research informs this phase"
 
   - name: AGENT_PROMPTS

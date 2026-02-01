@@ -243,7 +243,7 @@ Each phase creates its own checkpoint file:
 }
 ```
 
-**Note:** Phase numbers match `templates/index.yml`. Phase 5a-5c are UX (--ux flag). Phase 7d templates are deep architecture (--deep flag).
+**Note:** Phase numbers match `templates/index.yml`. Phase 5a-5d are UX (--ux flag). Phase 7d templates are deep architecture (--deep flag).
 
 ---
 
