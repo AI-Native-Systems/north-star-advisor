@@ -19,7 +19,7 @@ To find it:
 
 - **NEVER** hallucinate document names not in `templates/index.yml`
 - **ALWAYS** read this file to determine expected vs generated documents
-- Filter templates by `flag` field based on project's stored flags (ux, deep)
+- Filter templates by `flag` field based on `state.ux` and `state.deep` booleans
 
 ---
 
@@ -167,7 +167,7 @@ Use `AskUserQuestion` with options:
 - "View generated documents"
 
 If user selects a flag option:
-1. Update state.json with new flags
+1. Update state.json: set `ux: true` and/or `deep: true` as appropriate
 2. Re-display status with updated counts
 3. Ask again
 
@@ -289,7 +289,7 @@ See `advisor-build.md` Step 5 for the full cross-check procedure.
 
 Summary:
 1. Read `templates/index.yml`
-2. Determine expected templates based on flags
+2. Determine expected templates based on `state.ux` and `state.deep`
 3. Verify each expected file exists and has content
 4. Display cross-check results
 5. If any missing: offer to regenerate

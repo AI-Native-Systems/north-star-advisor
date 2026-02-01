@@ -66,8 +66,10 @@ To find it:
 
 ```
 1. Parse command-line flags: --ux, --deep, --full, --search-tool, --from, --to, --only
-2. Merge with stored flags (union, not replace)
-3. If --full: enable both ux and deep
+2. Merge with stored state (OR logic - once enabled, stays enabled):
+   - If --ux passed OR state.ux is true: set ux = true
+   - If --deep passed OR state.deep is true: set deep = true
+3. If --full: set both ux = true and deep = true
 4. If --search-tool provided: update state.json with new search_tool value
 5. Write updated state.json immediately
 ```
@@ -130,7 +132,7 @@ Use `AskUserQuestion` with options:
 - "Change search tool"
 
 If user selects a flag option:
-1. Update state.json with new flags
+1. Update state.json: set `ux: true` and/or `deep: true` as appropriate
 2. Re-display build plan with updated counts
 3. Ask again
 
@@ -478,12 +480,14 @@ Update state.json: `research_complete: true`
 1. Read `north-star-advisor/.work-in-progress/state.json`
 2. Read `north-star-advisor/.work-in-progress/inputs.yml`
 3. Read `north-star-advisor/.work-in-progress/research/summary.md`
-4. **Merge command-line flags with stored flags:**
+4. **Merge command-line flags with stored state:**
    - Parse `--ux`, `--deep`, `--full`, `--search-tool` from command arguments
-   - If `--full`: enable both `--ux` and `--deep`
-   - Combine with flags already in state.json (union, not replace)
+   - If `--full`: set both `ux = true` and `deep = true`
+   - Merge using OR logic (once enabled, stays enabled):
+     - `ux = (--ux passed) OR (state.ux == true)`
+     - `deep = (--deep passed) OR (state.deep == true)`
    - If `--search-tool` provided, override stored value; otherwise use stored `search_tool`
-   - Update state.json with merged flags
+   - Update state.json with merged values
 5. Determine which phases to generate:
    - Build full phase list based on merged flags
    - Subtract `completed_phases` from state.json
@@ -668,10 +672,10 @@ Next: Phase [N+1] - [next template.name from index.yml]
 
 ```
 1. Read templates/index.yml
-2. Determine expected templates based on project flags:
+2. Determine expected templates based on state.json:
    - Always include: templates where flag: null (core)
-   - If ux enabled: include templates where flag: ux
-   - If deep enabled: include templates where flag: deep
+   - If state.ux == true: include templates where flag: ux
+   - If state.deep == true: include templates where flag: deep
 3. For each expected template:
    a. Check if output file exists at template.output path
    b. Check if file has content (size > 0 bytes)

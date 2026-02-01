@@ -60,10 +60,11 @@ Your goal is not to extract information—it's to help the user discover what th
 ### Step 2: Parse Flags
 
 1. Parse command arguments for flags: `--ux`, `--deep`, `--full`, `--target`, `--search-tool`
-2. If `--full`, set both `--ux` and `--deep` to true
+2. If `--full`, set both `ux` and `deep` to true
 3. Determine target path (default: current working directory)
 4. Store all parsed values for state.json (written in Phase D):
-   - `flags`: array of enabled flags
+   - `ux`: boolean (true if --ux or --full passed)
+   - `deep`: boolean (true if --deep or --full passed)
    - `search_tool`: value from `--search-tool` or null if not specified
    - `target_path`: resolved target directory
 
@@ -289,7 +290,8 @@ Before creating state.json, locate the template index:
   "project_name": "<application_name>",
   "target_path": "<resolved-path>",
   "plugin_index_path": "<absolute-path-to-templates/index.yml>",
-  "flags": ["--ux", "--deep"],
+  "ux": true,
+  "deep": true,
   "search_tool": "<user-specified-tool-or-null>",
   "understanding_verified": true,
   "current_phase": null,
