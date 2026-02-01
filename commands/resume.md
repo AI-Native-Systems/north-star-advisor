@@ -26,10 +26,13 @@ Resume generation from the last checkpoint after interruption.
 
 | Option | Description |
 |--------|-------------|
+| `--ux` | Add UX templates. Updates state.json. |
+| `--deep` | Add deep architecture templates. Updates state.json. |
+| `--full` | Enable all templates (--ux + --deep). Updates state.json. |
+| `--search-tool <tool>` | Override search tool. Updates state.json. |
 | `--restart` | Restart current phase from scratch |
 | `--rollback` | Go back to previous phase |
 | `--checkpoint <name>` | Resume from specific checkpoint |
-| `--search-tool <tool>` | Override search tool for research. Updates state.json for this session. |
 
 ---
 
@@ -46,10 +49,13 @@ Resume generation from the last checkpoint after interruption.
 
 1. Read `templates/index.yml` to get the authoritative template list
 2. Read `north-star-advisor/.work-in-progress/state.json`
-3. **If `--search-tool <tool>` was passed on command line:**
-   - Update `state.json` with `search_tool: "<tool>"`
+3. **Update state.json if command-line flags were passed:**
+   - If `--full`: set `ux: true` and `deep: true`
+   - If `--ux`: set `ux: true`
+   - If `--deep`: set `deep: true`
+   - If `--search-tool <tool>`: set `search_tool: "<tool>"`
    - Write updated state.json immediately
-4. Check which flags were used: `ux`, `deep`
+4. Check which flags are now enabled: `ux`, `deep`
 5. **Filter templates from index.yml:**
    - Include all templates where `flag: null` (core)
    - If `ux: true`: include templates where `flag: ux`

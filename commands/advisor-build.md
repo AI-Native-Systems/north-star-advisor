@@ -18,13 +18,13 @@ Research and generate strategic documents following the North Star methodology. 
 
 | Option | Description |
 |--------|-------------|
+| `--ux` | Add UX design templates (3 templates). Updates state.json. |
+| `--deep` | Add deep architecture templates (6 templates). Updates state.json. |
+| `--full` | Enable all templates (--ux + --deep). Updates state.json. |
+| `--search-tool <tool>` | Override search tool. Updates state.json. |
 | `--from <N>` | Start from phase N (research runs if not cached) |
 | `--to <N>` | Stop at phase N |
 | `--only <N>` | Regenerate only phase N (research runs if not cached) |
-| `--ux` | Add UX design templates (can be added after initial build) |
-| `--deep` | Add deep architecture templates (can be added after initial build) |
-| `--full` | Add all templates (equivalent to --ux --deep) |
-| `--search-tool <tool>` | Override search tool for research (e.g., user defined search tool). If not specified, uses value from state.json. |
 
 ---
 

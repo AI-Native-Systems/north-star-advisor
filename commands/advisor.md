@@ -16,13 +16,13 @@ Begin strategic discovery for a new North Star Advisor project. This command act
 
 | Flag | Description |
 |------|-------------|
-| `--ux` | Include UX design templates (3 templates) |
-| `--deep` | Include deep architecture templates (6 templates) |
-| `--full` | Include all templates (equivalent to --ux --deep) |
+| `--ux` | Add UX design templates (3 templates). Stored in state.json. |
+| `--deep` | Add deep architecture templates (6 templates). Stored in state.json. |
+| `--full` | Enable all templates (--ux + --deep). Stored in state.json. |
+| `--target <path>` | Specify output directory (default: current directory) |
+| `--search-tool <tool>` | Search tool for research. Stored in state.json. |
 
 **Template counts:** Read `templates/index.yml` for the authoritative list.
-| `--target <path>` | Specify output directory (default: current directory) |
-| `--search-tool <tool>` | Preferred search tool for research (e.g., user defined search tool). Stored in state.json and passed to research agents. |
 
 ---
 
