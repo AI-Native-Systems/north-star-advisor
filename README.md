@@ -102,8 +102,8 @@ Research and generate strategic documents:
 |------|-------------|-----------|
 | (none) | Core strategic documents | 12 templates |
 | `--ux` | Add UX design templates | +3 (15 total) |
-| `--deep` | Add architecture templates | +7 (19 total) |
-| `--full` | All templates | 22 total |
+| `--deep` | Add architecture templates | +6 (18 total) |
+| `--full` | All templates | 21 total |
 | `--search-tool <tool>` | Use specified search tool for research (e.g., local MCP server) | - |
 
 ## Templates
@@ -129,9 +129,12 @@ Research and generate strategic documents:
 - **UI_DESIGN_SYSTEM** - Design tokens, components, patterns
 - **ACCESSIBILITY** - WCAG 2.1 AA compliance patterns
 
-### Architecture Templates (--deep, 7) → `docs/architecture/`
+### Architecture Templates → `docs/architecture/`
 
+**Core (always generated):**
 - **AGENT_PROMPTS** - System prompts per agent
+
+**Deep (--deep flag, 6 templates):**
 - **PIPELINE_ORCHESTRATION** - Agent coordination patterns
 - **RESILIENCE_PATTERNS** - Circuit breakers, retries, fallbacks
 - **IMPLEMENTATION_SCAFFOLD** - Project structure, setup
@@ -199,6 +202,24 @@ north-star-advisor/
 
 Resume anytime with `/northstar:resume`.
 Export for sharing with `/northstar:export`.
+
+## Checkpoints & Cross-Check
+
+### Per-Phase Checkpoints
+
+After each phase completes:
+- Verifies output file exists at expected path
+- Checks file has content (size > 0)
+- Writes checkpoint for resume capability
+- Stops generation if verification fails
+
+### Final Cross-Check
+
+Before marking generation complete:
+- Validates all expected outputs exist
+- Reports each file with ✓ (found) or ✗ (missing)
+- Offers to regenerate missing documents
+- Only marks complete when all files verified
 
 ## Validation
 
