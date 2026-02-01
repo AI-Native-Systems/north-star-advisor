@@ -63,7 +63,8 @@ Research and generate strategic documents following the North Star methodology. 
 1. Parse command-line flags: --ux, --deep, --full, --search-tool, --from, --to, --only
 2. Merge with stored flags (union, not replace)
 3. If --full: enable both ux and deep
-4. If --search-tool provided: override stored value
+4. If --search-tool provided: update state.json with new search_tool value
+5. Write updated state.json immediately
 ```
 
 ### 0.4 Display Build Plan

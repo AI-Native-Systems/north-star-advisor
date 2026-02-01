@@ -29,7 +29,7 @@ Resume generation from the last checkpoint after interruption.
 | `--restart` | Restart current phase from scratch |
 | `--rollback` | Go back to previous phase |
 | `--checkpoint <name>` | Resume from specific checkpoint |
-| `--search-tool <tool>` | Override search tool for research (e.g., user defined search tool) |
+| `--search-tool <tool>` | Override search tool for research. Updates state.json for this session. |
 
 ---
 
@@ -46,14 +46,17 @@ Resume generation from the last checkpoint after interruption.
 
 1. Read `templates/index.yml` to get the authoritative template list
 2. Read `north-star-advisor/.work-in-progress/state.json`
-3. Check which flags were used: `ux`, `deep`
-4. **Filter templates from index.yml:**
+3. **If `--search-tool <tool>` was passed on command line:**
+   - Update `state.json` with `search_tool: "<tool>"`
+   - Write updated state.json immediately
+4. Check which flags were used: `ux`, `deep`
+5. **Filter templates from index.yml:**
    - Include all templates where `flag: null` (core)
    - If `ux: true`: include templates where `flag: ux`
    - If `deep: true`: include templates where `flag: deep`
-5. Glob `north-star-advisor/docs/**/*.md` to find generated documents
-6. Compare expected (from index.yml) vs generated to calculate remaining
-7. **NEVER invent document names - only use names from templates/index.yml**
+6. Glob `north-star-advisor/docs/**/*.md` to find generated documents
+7. Compare expected (from index.yml) vs generated to calculate remaining
+8. **NEVER invent document names - only use names from templates/index.yml**
 
 If no state exists:
 ```

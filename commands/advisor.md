@@ -62,7 +62,10 @@ Your goal is not to extract information—it's to help the user discover what th
 1. Parse command arguments for flags: `--ux`, `--deep`, `--full`, `--target`, `--search-tool`
 2. If `--full`, set both `--ux` and `--deep` to true
 3. Determine target path (default: current working directory)
-4. Store flags for state persistence (including `search_tool` if specified)
+4. Store all parsed values for state.json (written in Phase D):
+   - `flags`: array of enabled flags
+   - `search_tool`: value from `--search-tool` or null if not specified
+   - `target_path`: resolved target directory
 
 ---
 
