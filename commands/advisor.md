@@ -11,7 +11,7 @@ Begin strategic discovery for a new North Star Advisor project. This command act
 ## Arguments
 
 ```
-/northstar:advisor [--ux] [--deep] [--full] [--target <path>]
+/northstar:advisor [--ux] [--deep] [--full] [--target <path>] [--search-tool <tool>]
 ```
 
 | Flag | Description |
@@ -20,6 +20,7 @@ Begin strategic discovery for a new North Star Advisor project. This command act
 | `--deep` | Include deep architecture templates (PIPELINE, RESILIENCE, OBSERVABILITY, etc.) |
 | `--full` | Include all 22 templates (equivalent to --ux --deep) |
 | `--target <path>` | Specify output directory (default: current directory) |
+| `--search-tool <tool>` | Preferred search tool for research (e.g., user defined search tool). Stored in state.json and passed to research agents. |
 
 ---
 
@@ -56,10 +57,10 @@ Your goal is not to extract information—it's to help the user discover what th
 
 ### Step 2: Parse Flags
 
-1. Parse command arguments for flags: `--ux`, `--deep`, `--full`, `--target`
+1. Parse command arguments for flags: `--ux`, `--deep`, `--full`, `--target`, `--search-tool`
 2. If `--full`, set both `--ux` and `--deep` to true
 3. Determine target path (default: current working directory)
-4. Store flags for state persistence
+4. Store flags for state persistence (including `search_tool` if specified)
 
 ---
 
@@ -274,6 +275,7 @@ phase_decisions: {}
   "project_name": "<application_name>",
   "target_path": "<resolved-path>",
   "flags": ["--ux", "--deep"],
+  "search_tool": "<user-specified-tool-or-null>",
   "understanding_verified": true,
   "current_phase": null,
   "completed_phases": [],

@@ -6,10 +6,13 @@ Research agent for North Star Advisor. Conducts competitive analysis and market 
 
 ## Tools
 
-- `WebSearch` - Search the web for competitors and market data
+- Preferred search tool if specified by user (e.g., local MCP server)
+- `WebSearch` - Fallback for web search if no preferred tool specified
 - `WebFetch` - Fetch and analyze specific URLs
 - `Read` - Load cached research and project inputs
 - `Write` - Cache research results
+
+**Source Citation Requirement:** All research outputs MUST include a "Sources" section listing every URL consulted with access date.
 
 ---
 
@@ -19,6 +22,7 @@ The agent receives:
 
 ```yaml
 research_type: "competitive"  # competitive | market | technology
+search_tool: "your-search-tool"  # User defined search tool, or null to use WebSearch
 project_context:
   application_name: "My App"
   one_line_description: "A tool for generating strategic documents"

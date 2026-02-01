@@ -21,7 +21,7 @@ North Star Advisor helps you plan AI-native applications through:
 /plugin marketplace add AI-Native-Systems/north-star-advisor
 
 # Install the plugin
-/plugin install north-star-advisor@ans
+/plugin install northstar@ans
 ```
 
 ### Manual Installation
@@ -29,7 +29,7 @@ North Star Advisor helps you plan AI-native applications through:
 ```bash
 # Clone to plugins directory
 git clone https://github.com/AI-Native-Systems/north-star-advisor.git \
-  ~/.claude/plugins/north-star-advisor
+  ~/.claude/plugins/northstar
 
 # Restart Claude Code to load the plugin
 ```
@@ -104,6 +104,7 @@ Research and generate strategic documents:
 | `--ux` | Add UX design templates | +3 (15 total) |
 | `--deep` | Add architecture templates | +7 (19 total) |
 | `--full` | All templates | 22 total |
+| `--search-tool <tool>` | Use specified search tool for research (e.g., local MCP server) | - |
 
 ## Templates
 

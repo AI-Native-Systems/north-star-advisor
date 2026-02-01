@@ -22,6 +22,7 @@ Research and generate strategic documents following the North Star methodology. 
 | `--ux` | Add UX design templates (can be added after initial build) |
 | `--deep` | Add deep architecture templates (can be added after initial build) |
 | `--full` | Add all templates (equivalent to --ux --deep) |
+| `--search-tool <tool>` | Override search tool for research (e.g., user defined search tool). If not specified, uses value from state.json. |
 
 ---
 
@@ -77,7 +78,9 @@ To refresh, delete north-star-advisor/.work-in-progress/research/summary.md
 
 ### Spawn Parallel Research Agents
 
-Use `Task` tool with `run_in_background: true` for all 4 agents simultaneously:
+Use `Task` tool with `run_in_background: true` for all 4 agents simultaneously.
+
+**IMPORTANT:** Pass the `search_tool` value from state.json to each agent prompt. If `search_tool` is null or not set, use "WebSearch" as the default.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -129,7 +132,10 @@ Search for:
 - Popular libraries and their trade-offs
 - Version recommendations and compatibility
 
-Use WebSearch to find real-world examples and best practices.
+Search tool: [search_tool OR "WebSearch" if not specified]. Use this tool for all web searches.
+
+IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources" section at the end listing all URLs consulted.
+
 Return structured markdown with recommendations and rationale.
 ```
 
@@ -149,7 +155,10 @@ Search for:
 - Onboarding flows for similar products
 - Accessibility considerations
 
-Use WebSearch to find real-world examples and patterns.
+Search tool: [search_tool OR "WebSearch" if not specified]. Use this tool for all web searches.
+
+IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources" section at the end listing all URLs consulted.
+
 Return structured markdown with expected features and UX recommendations.
 ```
 
@@ -169,7 +178,10 @@ Search for:
 - API design patterns
 - Scalability considerations
 
-Use WebSearch to find real-world examples and patterns.
+Search tool: [search_tool OR "WebSearch" if not specified]. Use this tool for all web searches.
+
+IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources" section at the end listing all URLs consulted.
+
 Return structured markdown with pattern recommendations.
 ```
 
@@ -189,7 +201,10 @@ Search for:
 - Security vulnerabilities specific to this type
 - Performance issues and how to prevent them
 
-Use WebSearch to find real-world examples and cautionary tales.
+Search tool: [search_tool OR "WebSearch" if not specified]. Use this tool for all web searches.
+
+IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources" section at the end listing all URLs consulted.
+
 Return structured markdown with pitfalls and prevention strategies.
 ```
 
@@ -379,9 +394,10 @@ After Phase 7, these additional templates are generated in `north-star-advisor/d
 2. Read `north-star-advisor/.work-in-progress/inputs.yml`
 3. Read `north-star-advisor/.work-in-progress/research/summary.md`
 4. **Merge command-line flags with stored flags:**
-   - Parse `--ux`, `--deep`, `--full` from command arguments
+   - Parse `--ux`, `--deep`, `--full`, `--search-tool` from command arguments
    - If `--full`: enable both `--ux` and `--deep`
    - Combine with flags already in state.json (union, not replace)
+   - If `--search-tool` provided, override stored value; otherwise use stored `search_tool`
    - Update state.json with merged flags
 5. Determine which phases to generate:
    - Build full phase list based on merged flags
@@ -663,7 +679,7 @@ If validation fails:
 - `Task` - Spawn generator, validator, and research agents
 - `AskUserQuestion` - Gather decision prompts and confirmations
 - `Bash` - Create directory structure
-- `WebSearch` / `mcp__pplx__perplexity-search` - Research queries
+- `WebSearch` or user defined search tool - Research queries
 
 ---
 

@@ -19,6 +19,7 @@ Resume generation from the last checkpoint after interruption.
 | `--restart` | Restart current phase from scratch |
 | `--rollback` | Go back to previous phase |
 | `--checkpoint <name>` | Resume from specific checkpoint |
+| `--search-tool <tool>` | Override search tool for research (e.g., user defined search tool) |
 
 ---
 

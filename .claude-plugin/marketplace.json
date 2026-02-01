@@ -5,15 +5,15 @@
   },
   "metadata": {
     "description": "Strategic document generation for agentic applications",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "repository": "https://github.com/AI-Native-Systems/north-star-advisor"
   },
   "plugins": [
     {
-      "name": "north-star-advisor",
+      "name": "northstar",
       "source": "./",
       "description": "Strategic document generation for agentic applications. Generate 22 design documents following the North Star methodology: brand guidelines, architecture blueprints, competitive analysis, and more. Commands: advisor, advisor-build, status, resume, help.",
-      "version": "1.0.7",
+      "version": "1.1.0",
       "author": {
         "name": "Patrick Pena"
       },
