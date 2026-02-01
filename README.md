@@ -14,8 +14,6 @@ North Star Advisor helps you plan AI-native applications through:
 
 ## Installation
 
-### From Claude Code Marketplace
-
 ```bash
 # Add the marketplace
 /plugin marketplace add AI-Native-Systems/north-star-advisor
@@ -24,66 +22,13 @@ North Star Advisor helps you plan AI-native applications through:
 /plugin install northstar@ans
 ```
 
-### Manual Installation
-
-```bash
-# Clone to plugins directory
-git clone https://github.com/AI-Native-Systems/north-star-advisor.git \
-  ~/.claude/plugins/northstar
-
-# Restart Claude Code to load the plugin
-```
-
 ## Quick Start
 
 ```bash
-# Start strategic discovery
-/northstar:advisor
-
-# Research and generate documents
-/northstar:advisor-build
-
-# Check progress
-/northstar:status
+/northstar:advisor        # Strategic discovery
+/northstar:advisor-build  # Research and generate documents
+/northstar:status         # Check progress
 ```
-
-## After Generation
-
-The generated documents form a complete strategic blueprint for your application.
-Point Claude Code at these docs and it will understand:
-
-- **What to build** - Features, user journeys, success metrics
-- **What NOT to build** - Kill list, non-goals, out-of-scope items
-- **How to build it** - Architecture patterns, agent topology, security guardrails
-- **How to talk about it** - Brand voice, terminology, beliefs
-
-This transforms Claude Code from a general assistant into a context-aware partner that builds according to your strategic vision.
-
-## Workflow
-
-### Step 1: `/northstar:advisor`
-
-The advisor acts as your thinking partner:
-
-1. **Open Exploration** - "What are you building, and why does it need to exist?"
-2. **Follow-up Questions** - Challenges vague answers until concrete
-3. **Understanding Checkpoint** - Verifies shared understanding before proceeding
-4. **Save State** - Creates discovery.md, inputs.yml, ai-context.yml
-
-### Step 2: `/northstar:advisor-build`
-
-Research and generate strategic documents:
-
-1. **Research Phase** - 4 parallel agents gather domain insights
-   - Tech Stack: Frameworks, libraries, best practices
-   - Features & UX: Expected features, UX patterns
-   - Architecture: Patterns, data flow, scalability
-   - Pitfalls: Common mistakes, security concerns
-
-2. **Research Checkpoint** - Review findings before generation
-
-3. **Generation** - 13 phases create strategic documents
-   - Research informs Phases 6 (Architecture), 7 (Agents), 8 (Security)
 
 ## Commands
 
@@ -96,7 +41,7 @@ Research and generate strategic documents:
 | `/northstar:export` | Package docs into shareable zip |
 | `/northstar:help` | Show available commands |
 
-## Generation Flags
+## Flags
 
 | Flag | Description | Templates |
 |------|-------------|-----------|
@@ -104,133 +49,34 @@ Research and generate strategic documents:
 | `--ux` | Add UX design templates | +3 (15 total) |
 | `--deep` | Add architecture templates | +6 (18 total) |
 | `--full` | All templates | 21 total |
-| `--search-tool <tool>` | Use specified search tool for research (e.g., local MCP server) | - |
+| `--search-tool <tool>` | Use custom search tool for research | - |
 
-## Templates
+## After Generation
 
-### Core Templates (12) → `docs/`
+The generated documents form a complete strategic blueprint. Point Claude Code at these docs and it will understand:
 
-1. **BRAND_GUIDELINES** - Product name, beliefs, kill list, voice
-2. **NORTHSTAR** - North Star metric, personas, success phases
-3. **COMPETITIVE_LANDSCAPE** - Market analysis, competitor features
-4. **NORTHSTAR_EXTRACT** - Axioms, non-goals, constraints
-5. **ARCHITECTURE_BLUEPRINT** - Agent topology, tech stack
-6. **SECURITY_ARCHITECTURE** - Threats, auth, safety guardrails
-7. **ADR** - Architecture decision records
-8. **POST_DEPLOYMENT** - Monitoring, maintenance, runbook
-9. **STRATEGIC_RECOMMENDATION** - Paths, trade-offs, decisions
-10. **ACTION_ROADMAP** - 30-60-90 day actions
-11. **INDEX** - Documentation hub
-12. **OPERATIONS_RUNBOOK** - Production operations (optional)
+- **What to build** - Features, user journeys, success metrics
+- **What NOT to build** - Kill list, non-goals, out-of-scope items
+- **How to build it** - Architecture patterns, agent topology, security guardrails
+- **How to talk about it** - Brand voice, terminology, beliefs
 
-### Design Templates (--ux, 3) → `docs/design/`
+Add to your project's `CLAUDE.md`:
 
-- **USER_JOURNEYS** - Emotional journey maps per persona
-- **UI_DESIGN_SYSTEM** - Design tokens, components, patterns
-- **ACCESSIBILITY** - WCAG 2.1 AA compliance patterns
+```markdown
+## Strategic Context
 
-### Architecture Templates → `docs/architecture/`
+This project was planned using North Star Advisor.
+Before implementing features, read:
 
-**Core (always generated):**
-- **AGENT_PROMPTS** - System prompts per agent
-
-**Deep (--deep flag, 6 templates):**
-- **PIPELINE_ORCHESTRATION** - Agent coordination patterns
-- **RESILIENCE_PATTERNS** - Circuit breakers, retries, fallbacks
-- **IMPLEMENTATION_SCAFFOLD** - Project structure, setup
-- **OBSERVABILITY** - Logging, tracing, alerting
-- **TESTING_STRATEGY** - Test plans, golden datasets
-- **HANDOFF_PROTOCOL** - Agent-to-agent delegation
-
-## Research Phase
-
-Before generation, 4 research agents run in parallel using **WebSearch** to gather domain insights:
-
-| Agent | Focus |
-|-------|-------|
-| Tech Stack | Frameworks, libraries, best practices for your tech choices |
-| Features & UX | Expected features, UX patterns, accessibility |
-| Architecture | Patterns, data flow, scalability considerations |
-| Pitfalls | Common mistakes, anti-patterns, security concerns |
-
-Research is cached for 24 hours. Findings inform Phases 6, 7, and 8.
-
-## Progressive AI Context
-
-The `ai-context.yml` file grows as generation progresses:
-
-**Location:** `north-star-advisor/ai-context.yml`
-
-| Phase | Context Added |
-|-------|---------------|
-| advisor | Project name, description, users, differentiator, tech_stack |
-| 1 | Beliefs, kill list, brand voice |
-| 2 | North Star metric, measurement, personas |
-| 3 | Competitors, differentiation |
-| 4 | Axioms, non-goals, constraints |
-| 5a-c | Design journeys, tokens, accessibility (--ux) |
-| 6 | Architecture pattern, agents, tech stack |
-| 7 | Agent prompts (summaries) |
-| 8 | Auth pattern, threats, guardrails |
-| 9 | ADR decisions |
-| 10 | Monitoring, alerts |
-| 11 | Recommended path, trade-offs |
-| 12 | Roadmap phases |
-| 13 | Document references |
-
-## State Persistence
-
-All progress is saved to `north-star-advisor/`:
-
-```
-north-star-advisor/
-├── ai-context.yml            # Strategic context for Claude Code
-├── .work-in-progress/        # Hidden - active session data
-│   ├── state.json            # Generation progress
-│   ├── inputs.yml            # User inputs from advisor
-│   ├── discovery.md          # Exploration notes
-│   ├── outputs/              # Extracted data for cross-refs
-│   ├── checkpoints/          # Resume points
-│   └── research/             # Cached domain research
-│       ├── summary.md
-│       ├── tech-stack.md
-│       ├── features-ux.md
-│       ├── architecture.md
-│       └── pitfalls.md
-└── docs/                     # Generated strategic documents
+- `north-star-advisor/ai-context.yml` - Strategic context (start here)
+- `north-star-advisor/docs/INDEX.md` - Documentation hub
 ```
 
-Resume anytime with `/northstar:resume`.
-Export for sharing with `/northstar:export`.
+## Learn More
 
-## Checkpoints & Cross-Check
-
-### Per-Phase Checkpoints
-
-After each phase completes:
-- Verifies output file exists at expected path
-- Checks file has content (size > 0)
-- Writes checkpoint for resume capability
-- Stops generation if verification fails
-
-### Final Cross-Check
-
-Before marking generation complete:
-- Validates all expected outputs exist
-- Reports each file with ✓ (found) or ✗ (missing)
-- Offers to regenerate missing documents
-- Only marks complete when all files verified
-
-## Validation
-
-Every document passes through validation gates that ensure:
-
-- Required sections are present
-- Cross-references resolve correctly
-- Content meets quality standards
-- Terminology is consistent
-
-Validation is **blocking** by default - failures stop generation until fixed.
+- [Methodology](references/methodology.md) - Generation phases and principles
+- [Validation Gates](references/validation-gates.md) - Per-phase validation rules
+- [Data Flow](references/data-flow.md) - How data moves through generation
 
 ## Requirements
 

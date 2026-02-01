@@ -6,7 +6,7 @@ Core methodology reference for strategic document generation.
 
 ## Overview
 
-The North Star Advisor methodology is a structured approach to generating strategic design documentation for agentic applications. It produces 22 documents across 13 generation phases, ensuring consistency, completeness, and cross-reference integrity.
+The North Star Advisor methodology is a structured approach to generating strategic design documentation for agentic applications. It produces up to 21 documents across 13 generation phases, ensuring consistency, completeness, and cross-reference integrity.
 
 ---
 
@@ -281,21 +281,20 @@ Always generated:
 3. COMPETITIVE_LANDSCAPE
 4. NORTHSTAR_EXTRACT
 5. ARCHITECTURE_BLUEPRINT
-6. SECURITY_ARCHITECTURE
-7. ADR
-8. POST_DEPLOYMENT
-9. STRATEGIC_RECOMMENDATION
-10. ACTION_ROADMAP
-11. INDEX
-12. OPERATIONS_RUNBOOK (optional)
+6. AGENT_PROMPTS
+7. SECURITY_ARCHITECTURE
+8. ADR
+9. POST_DEPLOYMENT
+10. STRATEGIC_RECOMMENDATION
+11. ACTION_ROADMAP
+12. INDEX
 
 ### Design Templates (3, --ux flag)
 5a. USER_JOURNEYS
 5b. UI_DESIGN_SYSTEM
 5c. ACCESSIBILITY
 
-### Architecture Templates (7, --deep flag)
-- AGENT_PROMPTS (always with --deep)
+### Architecture Templates (6, --deep flag)
 - PIPELINE_ORCHESTRATION
 - RESILIENCE_PATTERNS
 - IMPLEMENTATION_SCAFFOLD
@@ -311,8 +310,8 @@ Always generated:
 |------|-----------------|-------|
 | (none) | 12 core | 12 |
 | --ux | +3 design | 15 |
-| --deep | +7 architecture | 19 |
-| --full | All | 22 |
+| --deep | +6 architecture | 18 |
+| --full | All | 21 |
 
 ---
 
