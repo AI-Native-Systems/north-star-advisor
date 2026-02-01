@@ -45,22 +45,27 @@ To find it:
 
 **This step is REQUIRED before any generation.**
 
-### 0.1 Load Template Manifest
+### 0.1 Load Project State (FIRST)
 
 ```
-1. Read templates/index.yml (SINGLE SOURCE OF TRUTH)
+1. Read north-star-advisor/.work-in-progress/state.json
+2. Get plugin_index_path from state.json
+3. Read north-star-advisor/.work-in-progress/inputs.yml
+4. Get current flags: ux, deep, search_tool
+5. Get completed_phases array
+```
+
+### 0.2 Load Template Manifest
+
+```
+1. Read templates/index.yml at plugin_index_path (SINGLE SOURCE OF TRUTH)
 2. Parse all templates into memory
 3. Note the counts: core=12, ux=3, deep=6
 ```
 
-### 0.2 Load Project State
-
-```
-1. Read north-star-advisor/.work-in-progress/state.json
-2. Read north-star-advisor/.work-in-progress/inputs.yml
-3. Get current flags: ux, deep, search_tool
-4. Get completed_phases array
-```
+If `plugin_index_path` is missing from state.json:
+- Glob: `**/northstar/**/templates/index.yml`
+- Update state.json with found path
 
 ### 0.3 Merge Command Flags
 

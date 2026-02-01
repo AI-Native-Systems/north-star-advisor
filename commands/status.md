@@ -8,15 +8,6 @@ Display current generation progress and next steps.
 
 ---
 
-## Template Source of Truth
-
-**CRITICAL:** Read `templates/index.yml` for the authoritative template list.
-
-- **NEVER** display document names not in `templates/index.yml`
-- Use `counts` section from index.yml for progress calculations
-
----
-
 ## Usage
 
 ```
@@ -27,7 +18,7 @@ Display current generation progress and next steps.
 
 ## Workflow
 
-### Step 1: Check for Project
+### Step 1: Check for Project and Load State
 
 1. Check if `north-star-advisor/.work-in-progress/state.json` exists
 2. If not exists:
@@ -35,13 +26,21 @@ Display current generation progress and next steps.
    No North Star project found.
    Run /northstar:advisor to start a new project.
    ```
-3. If exists, proceed to Step 2
+3. If exists:
+   a. Read state.json
+   b. Get `plugin_index_path` from state.json
+   c. Read `templates/index.yml` at that path
+   d. Read `north-star-advisor/.work-in-progress/inputs.yml`
 
-### Step 2: Load State
+If `plugin_index_path` is missing from state.json:
+- Glob: `**/northstar/**/templates/index.yml`
+- Update state.json with found path
 
-1. Read `north-star-advisor/.work-in-progress/state.json`
-2. Read `north-star-advisor/.work-in-progress/inputs.yml`
-3. Calculate completion statistics
+### Step 2: Calculate Statistics
+
+1. Use template list from index.yml for expected documents
+2. Check `state.ux` and `state.deep` for enabled flags
+3. Calculate completion from `completed_phases` array
 
 ### Step 3: Display Status
 

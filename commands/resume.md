@@ -8,18 +8,24 @@ Resume generation from the last checkpoint after interruption.
 
 ---
 
-## Template Source of Truth
+## FIRST: Read State (REQUIRED)
 
-**CRITICAL:** Read `templates/index.yml` for the authoritative template list.
+**BEFORE ANY OTHER ACTION:**
 
-To find it:
-1. Check `state.json` for `plugin_index_path` (cached location)
-2. If not found, use Glob: `**/northstar/**/templates/index.yml`
-3. Update `state.json` with found path for future use
+```
+1. Read: north-star-advisor/.work-in-progress/state.json
+2. Get: plugin_index_path from state.json
+3. Read: templates/index.yml at that exact path
+```
 
-- **NEVER** hallucinate document names not in `templates/index.yml`
-- **ALWAYS** read this file to determine expected vs generated documents
-- Filter templates by `flag` field based on `state.ux` and `state.deep` booleans
+If `plugin_index_path` is missing from state.json:
+- Glob: `**/northstar/**/templates/index.yml`
+- Update state.json with found path
+
+**Rules:**
+- **NEVER** hallucinate document names - only use names from index.yml
+- **ALWAYS** use plugin_index_path from state.json
+- Filter templates by `state.ux` and `state.deep` booleans
 
 ---
 
