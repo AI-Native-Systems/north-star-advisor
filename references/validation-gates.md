@@ -231,6 +231,19 @@ G6.4:
 | G7.3 | Example I/O provided | WARNING | At least one example per agent |
 | G7.4 | Handoff protocol defined | WARNING | Agent-to-agent handoff described |
 | G7.5 | Error handling specified | WARNING | How agents handle failures |
+| G7.6 | Safety guardrails included | BLOCKING | Each agent NEVER section includes: no medical/legal/personal advice, no harmful content, redirect off-topic, stay within scope |
+
+### G7 Failure Messages
+
+```yaml
+G7.1:
+  message: "Agent '{agent}' missing system prompt"
+  fix: "Add ## System Prompt section for each agent in topology"
+
+G7.6:
+  message: "Agent '{agent}' missing required safety guardrails"
+  fix: "Add to NEVER section: no medical/legal/personal advice, no harmful/violent/hateful/explicit content, redirect off-topic politely, stay within defined scope"
+```
 
 ---
 

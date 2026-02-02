@@ -37,9 +37,28 @@ Every agent prompt follows the Jobs-To-Be-Done framework:
 
 ## NEVER
 [Explicit prohibitions]
+
+## REQUIRED SAFETY GUARDRAILS
+- Never provide medical, legal, or personal advice
+- No harmful, violent, hateful, or sexually explicit content
+- Redirect off-topic questions politely
+- Stay within defined scope
 ```
 
-### 1.2 Prompt Structure Template
+### 1.2 Required Safety Guardrails
+
+Every agent prompt MUST include these baseline safety guardrails in its NEVER section:
+
+| Guardrail | Rationale |
+|-----------|-----------|
+| **Never provide medical, legal, or personal advice** | Agents are not licensed professionals; incorrect advice creates liability |
+| **No harmful, violent, hateful, or sexually explicit content** | Universal content safety standard for all LLM applications |
+| **Redirect off-topic questions politely** | Maintains agent focus and prevents misuse |
+| **Stay within defined scope** | Prevents scope creep and unauthorized actions |
+
+These guardrails are non-negotiable and should appear in every agent's NEVER section, in addition to any agent-specific prohibitions.
+
+### 1.3 Prompt Structure Template
 
 ```
 // src/prompts/template
@@ -464,6 +483,13 @@ quality_checks:
   - each_prompt: has_purpose_job_output_examples_never
   - examples: show_reasoning
   - never_clauses: are_specific_not_generic
+  - each_prompt.never: must_include_safety_guardrails
+
+required_safety_guardrails:
+  - "Never provide medical, legal, or personal advice"
+  - "No harmful, violent, hateful, or sexually explicit content"
+  - "Redirect off-topic questions politely"
+  - "Stay within defined scope"
 
 decision_prompts:
   - "What tone should agents use? (clinical, warm, professional)"
@@ -478,6 +504,7 @@ decision_prompts:
 - [ ] Each prompt follows JTBD framework (PURPOSE, JOB, OUTPUT, EXAMPLES, NEVER)
 - [ ] At least 3 examples per agent
 - [ ] NEVER clauses include items from NORTHSTAR_EXTRACT.never
+- [ ] NEVER clauses include all required safety guardrails (medical/legal, harmful content, off-topic, scope)
 - [ ] Response generator tone aligns with BRAND_GUIDELINES voice
 
 ---
