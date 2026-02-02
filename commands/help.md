@@ -30,7 +30,7 @@ COMMANDS
     Begin strategic discovery through open exploration.
     Acts as your thinking partner to articulate what you're building.
     Flags:
-      --ux      Include UX design templates (USER_JOURNEYS, UI_DESIGN_SYSTEM, ACCESSIBILITY)
+      --ux      Include UX design templates (USER_JOURNEYS, UI_DESIGN_SYSTEM, ACCESSIBILITY, etc.)
       --deep    Include deep architecture templates (PIPELINE, RESILIENCE, OBSERVABILITY, etc.)
       --full    Include all 22 templates (equivalent to --ux --deep)
 

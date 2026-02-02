@@ -116,6 +116,7 @@ Phase: 5 - USER_JOURNEYS (before)
 Phase 5a: USER_JOURNEYS            ⊘ Skipped (requires --ux)
 Phase 5b: UI_DESIGN_SYSTEM         ⊘ Skipped (requires --ux)
 Phase 5c: ACCESSIBILITY            ⊘ Skipped (requires --ux)
+Phase 5d: WIREFRAMES               ⊘ Skipped (requires --ux)
 ```
 
 ### When --deep flag is NOT set:
