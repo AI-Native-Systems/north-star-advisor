@@ -132,7 +132,18 @@ The 13-phase process reveals complexity progressively. Early phases establish co
 - Keyboard navigation
 - Testing protocols
 
-**Dependencies:** Phases 1-4
+#### Phase 5d: WIREFRAMES
+**Purpose:** Synthesize visual specifications
+
+**Key Outputs:**
+- ASCII wireframe specifications for core screens
+- Design token references from UI_DESIGN_SYSTEM
+- Per-screen accessibility checklists
+- Brand voice validation per screen
+- Implementation priority (P0/P1/P2)
+- Banned elements section from kill list
+
+**Dependencies:** Phases 5a, 5b, 5c
 
 ---
 
