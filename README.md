@@ -2,7 +2,7 @@
 
 # North Star Advisor™
 
-Strategic document generation for agentic applications. A Claude Code plugin that acts as your thinking partner to generate 22 design documents following the North Star methodology. The output is a structured documentation system that can be handed off to Claude Code providing it with details of what to build, what not to build, how to build it, and how to talk about it.
+Strategic document generation for agentic applications. A Claude Code plugin that acts as your thinking partner to generate 22 design documents following the North Star methodology. Helps define and preserve product intent while building agentic applications in Claude Code. The output is a structured documentation system that can be handed off to Claude Code providing it with details of what to build, what not to build, how to build it, and how to talk about it.
 
 ## Overview
 
