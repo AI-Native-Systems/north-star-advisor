@@ -17,7 +17,7 @@ Begin strategic discovery for a new North Star Advisor project. This command act
 | Flag | Description |
 |------|-------------|
 | `--ux` | Add UX design templates (4 templates). Stored in state.json. |
-| `--deep` | Add deep architecture templates (6 templates). Stored in state.json. |
+| `--deep` | Add deep architecture templates (7 templates). Stored in state.json. |
 | `--full` | Enable all templates (--ux + --deep). Stored in state.json. |
 | `--target <path>` | Specify output directory (default: current directory) |
 | `--search-tool <tool>` | Search tool for research. Stored in state.json. |
@@ -351,7 +351,7 @@ Flags:   [flags or "core templates only"]
 Templates to generate: (see templates/index.yml)
   • 12 core templates (always)
   • 4 UX templates (--ux)       [if applicable]
-  • 6 deep templates (--deep)   [if applicable]
+  • 7 deep templates (--deep)   [if applicable]
   Total: [count from index.yml] documents
 
 Files created:

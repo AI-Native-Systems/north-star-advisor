@@ -2,15 +2,15 @@
 
 # North Star Advisor™
 
-Strategic document generation for agentic applications. A Claude Code plugin that acts as your thinking partner to generate 22 design documents following the North Star methodology. Helps define and preserve product intent while building agentic applications in Claude Code. The output is a structured documentation system that can be handed off to Claude Code providing it with details of what to build, what not to build, how to build it, and how to talk about it.
+Strategic document generation for agentic applications. A Claude Code plugin that acts as your thinking partner to generate 23 design documents following the North Star methodology. Helps define and preserve product intent while building agentic applications in Claude Code. The output is a structured documentation system that can be handed off to Claude Code providing it with details of what to build, what not to build, how to build it, and how to talk about it.
 
 ## Overview
 
 North Star Advisor helps you plan AI-native applications through:
 
 1. **Strategic Discovery** - Open exploration to articulate what you're building
-2. **Domain Research** - 4 parallel agents research tech, features, architecture, and pitfalls
-3. **Document Generation** - 22 strategic documents informed by research
+2. **Domain Research** - 5 parallel agents research tech, features, architecture, pitfalls, and intelligence layer
+3. **Document Generation** - 23 strategic documents informed by research
 
 ## Installation
 
@@ -47,8 +47,8 @@ North Star Advisor helps you plan AI-native applications through:
 |------|-------------|-----------|
 | (none) | Core strategic documents | 12 templates |
 | `--ux` | Add UX design templates | +4 (16 total) |
-| `--deep` | Add architecture templates | +6 (18 total) |
-| `--full` | All templates | 22 total |
+| `--deep` | Add architecture templates | +7 (19 total) |
+| `--full` | All templates | 23 total |
 | `--search-tool <tool>` | Use custom search tool for research | - |
 
 ## After Generation

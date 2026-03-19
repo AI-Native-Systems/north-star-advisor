@@ -128,6 +128,7 @@ Deep Templates:                    ⊘ Skipped (requires --deep)
   - OBSERVABILITY
   - TESTING_STRATEGY
   - HANDOFF_PROTOCOL
+  - INTELLIGENCE_LAYER
 ```
 
 ### When validation failed:

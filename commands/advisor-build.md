@@ -24,7 +24,7 @@ To find it:
 | Option | Description |
 |--------|-------------|
 | `--ux` | Add UX design templates (4 templates). Updates state.json. |
-| `--deep` | Add deep architecture templates (6 templates). Updates state.json. |
+| `--deep` | Add deep architecture templates (7 templates). Updates state.json. |
 | `--full` | Enable all templates (--ux + --deep). Updates state.json. |
 | `--search-tool <tool>` | Override search tool. Updates state.json. |
 | `--from <N>` | Start from phase N (research runs if not cached) |
@@ -60,7 +60,7 @@ To find it:
 ```
 1. Read templates/index.yml at plugin_index_path (SINGLE SOURCE OF TRUTH)
 2. Parse all templates into memory
-3. Note the counts: core=12, ux=4, deep=6
+3. Note the counts: core=12, ux=4, deep=7
 ```
 
 If `plugin_index_path` is missing from state.json:
@@ -160,11 +160,12 @@ Only proceed to Step 1 (Research) after user confirms "Yes, start generation".
 │                                                                 │
 │  STEP 0: RESEARCH PHASE (required)                              │
 │  ├── Check for cached research (< 24h)                          │
-│  ├── If not cached: Run 4 parallel research agents              │
+│  ├── If not cached: Run 5 parallel research agents              │
 │  │   ├── Tech Stack Research                                    │
 │  │   ├── Features & UX Research                                 │
 │  │   ├── Architecture Research                                  │
-│  │   └── Pitfalls Research                                      │
+│  │   ├── Pitfalls Research                                      │
+│  │   └── Intelligence Layer Research                            │
 │  ├── Synthesize → research/summary.md                           │
 │  └── Research Checkpoint ✓                                      │
 │                                                                 │
@@ -195,13 +196,13 @@ To refresh, delete north-star-advisor/.work-in-progress/research/summary.md
 
 ### Spawn Parallel Research Agents
 
-Use `Task` tool with `run_in_background: true` for all 4 agents simultaneously.
+Use `Task` tool with `run_in_background: true` for all 5 agents simultaneously.
 
 **IMPORTANT:** Pass the `search_tool` value from state.json to each agent prompt. If `search_tool` is null or not set, use "WebSearch" as the default.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ RESEARCH WAVE - 4 PARALLEL AGENTS                               │
+│ RESEARCH WAVE - 5 PARALLEL AGENTS                               │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  ┌──────────────────┐  ┌──────────────────┐                    │
@@ -219,6 +220,15 @@ Use `Task` tool with `run_in_background: true` for all 4 agents simultaneously.
 │  │ • Data flow      │  │ • Common mistakes│                    │
 │  │ • Scalability    │  │ • Security       │                    │
 │  └──────────────────┘  └──────────────────┘                    │
+│                                                                 │
+│  ┌──────────────────┐                                          │
+│  │ Intelligence     │  ← NEW (always runs)                     │
+│  │ Layer            │                                          │
+│  │                  │                                          │
+│  │ • Embeddings     │                                          │
+│  │ • RAG patterns   │                                          │
+│  │ • Model routing  │                                          │
+│  └──────────────────┘                                          │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -325,9 +335,36 @@ IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources"
 Return structured markdown with pitfalls and prevention strategies.
 ```
 
+### Agent 5: Intelligence Layer Research
+
+```
+Research the intelligence/data layer for building [project_type].
+
+Context:
+- Project: [application_name]
+- Description: [one_line_description]
+- Architecture hints: [from architecture research, if available]
+- User's preferred stack: [tech_stack]
+
+Search for:
+- Embedding models and benchmarks for this domain
+- RAG patterns and production implementations for [project_type]
+- Vector database comparisons for [project_type]
+- Model routing approaches (single model vs multi-model, cost/quality tradeoffs)
+- LLM evaluation frameworks and benchmarks
+- Chunking strategies for [domain] content
+- Cost/performance benchmarks across model providers for [use_case]
+
+Search tool: [search_tool OR "WebSearch" if not specified]. Use this tool for all web searches.
+
+IMPORTANT: Cite all sources with URLs for full traceability. Include a "Sources" section at the end listing all URLs consulted.
+
+Return structured markdown with recommendations and rationale.
+```
+
 ### Collect and Synthesize
 
-Wait for all agents to complete (timeout: 120 seconds).
+Wait for all agents to complete (timeout: 120 seconds each).
 
 Create `north-star-advisor/.work-in-progress/research/summary.md`:
 
@@ -407,10 +444,30 @@ Users of [project_type] typically expect:
 
 ---
 
+## Intelligence Layer
+
+### Recommended Retrieval Approach
+[retrieval approach or "none needed" with rationale]
+
+### Model Selection Guidance
+| Task Type | Recommended Model | Cost/1M tokens | Rationale |
+|-----------|------------------|-----------------|-----------|
+| [type] | [model] | $[X] | [why] |
+
+### Evaluation Strategy
+- [recommended evaluation approach]
+
+### Key Tradeoffs
+- [tradeoff 1]
+- [tradeoff 2]
+
+---
+
 ## Generation Guidance
 
 These findings should inform:
 - **Phase 6 (ARCHITECTURE_BLUEPRINT):** [specific guidance]
+- **Phase 6 (ARCHITECTURE_BLUEPRINT):** [model selection rationale, RAG assessment, cost analysis from intelligence layer research]
 - **Phase 7 (AGENT_PROMPTS):** [specific guidance]
 - **Phase 8 (SECURITY_ARCHITECTURE):** [specific guidance]
 ```
@@ -420,6 +477,7 @@ Save individual reports:
 - `north-star-advisor/.work-in-progress/research/features-ux.md`
 - `north-star-advisor/.work-in-progress/research/architecture.md`
 - `north-star-advisor/.work-in-progress/research/pitfalls.md`
+- `north-star-advisor/.work-in-progress/research/intelligence-layer.md`
 
 ### Research Checkpoint
 
@@ -594,8 +652,9 @@ For Phases 6, 7, 8, include research context in the generator prompt:
 Additional context from research:
 [Include research.architecture section]
 [Include research.tech_stack section]
+[Include research.intelligence-layer section — model selection rationale, RAG assessment]
 
-Consider these recommendations when defining the architecture.
+Consider these recommendations when defining the architecture, model strategy, and RAG assessment.
 ```
 
 **Phase 7 (AGENT_PROMPTS):**
@@ -615,6 +674,16 @@ Additional context from research:
 Address these security concerns in the threat model.
 ```
 
+**Phase 7d/INTELLIGENCE_LAYER (--deep only):**
+```
+Additional context from research:
+[Include full research.intelligence-layer report]
+[Include research.architecture section — for system context]
+
+Use the full intelligence layer research for detailed retrieval architecture, embedding design,
+and evaluation framework decisions.
+```
+
 ### ai-context.yml Updates by Phase
 
 | Phase | Fields Added to ai-context.yml |
@@ -626,7 +695,7 @@ Address these security concerns in the threat model.
 | 5a | `design.journeys` (--ux only) |
 | 5b | `design.tokens` (--ux only) |
 | 5c | `design.accessibility` (--ux only) |
-| 6 | `architecture.pattern`, `architecture.agents`, `architecture.tech_stack` |
+| 6 | `architecture.pattern`, `architecture.agents`, `architecture.tech_stack`, `architecture.model_strategy`, `architecture.rag_assessment`, `architecture.cost_projection` |
 | 7 | `architecture.agent_prompts` (summaries) |
 | 8 | `security.auth_pattern`, `security.threats`, `security.guardrails` |
 | 9 | `decisions` (ADR summaries) |
@@ -645,6 +714,7 @@ Address these security concerns in the threat model.
 | OBSERVABILITY | `operations.logging_strategy`, `operations.tracing`, `operations.dashboards` |
 | TESTING_STRATEGY | `testing.unit_coverage`, `testing.integration_tests`, `testing.golden_datasets` |
 | HANDOFF_PROTOCOL | `architecture.delegation_rules`, `architecture.context_passing` |
+| INTELLIGENCE_LAYER | `intelligence.retrieval_architecture`, `intelligence.embedding_design`, `intelligence.evaluation_framework`, `intelligence.quality_metrics`, `intelligence.model_routing` |
 
 ---
 
@@ -703,7 +773,7 @@ Next: Phase [N+1] - [next template.name from index.yml]
 
 Validating outputs against templates/index.yml...
 
-Expected: [X] documents (core: 12, ux: [0|4], deep: [0|6])
+Expected: [X] documents (core: 12, ux: [0|4], deep: [0|7])
 Found:    [Y] documents
 
 CORE TEMPLATES

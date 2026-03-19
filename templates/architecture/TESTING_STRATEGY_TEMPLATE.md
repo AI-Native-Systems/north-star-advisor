@@ -147,6 +147,47 @@ GOLDEN_DATASET = [
 | Fallback | Degraded operation | 5 |
 | Error Handling | Error scenarios | 10 |
 
+### 3.5 AI Evaluation Tests
+
+> See also [INTELLIGENCE_LAYER.md](INTELLIGENCE_LAYER.md) for detailed evaluation framework.
+
+#### Retrieval Quality Tests (if RAG per arch.rag_assessment)
+
+> **Note**: Include these tests if ARCHITECTURE_BLUEPRINT Section 1.5 indicates RAG=yes.
+
+| Test | Target | Method |
+|------|--------|--------|
+| Retrieval precision | [target] | [method] |
+| Context relevance | [target] | [method] |
+| Answer faithfulness | [target] | [method] |
+
+#### Model Output Tests
+
+> **Note**: Adapt to your chosen test framework. This is pseudocode showing the pattern.
+
+```
+describe("Model Output Quality"):
+  it("should produce valid structured output"):
+    result = await agent.run(testInput)
+    expect(result).toMatchSchema(outputSchema)
+
+  it("should reject off-topic queries"):
+    result = await agent.run(offTopicInput)
+    expect(result.rejected).toBe(true)
+
+  it("should stay within cost budget"):
+    result = await agent.run(testInput)
+    expect(result.cost).toBeLessThan(costBudget)
+```
+
+#### Evaluation Pyramid Integration
+
+Tiered evaluation approach:
+1. **Unit** (no LLM): Deterministic tests on data access, schemas, transformations
+2. **Integration** (test models): Pipeline tests with dependency injection
+3. **Tool eval** (domain evaluators): Custom evaluators against seeded data
+4. **Agent eval** (real LLM): End-to-end with structured output validation
+
 ---
 
 ## 4. Agent Unit Tests
@@ -575,6 +616,8 @@ inputs_required:
   - prompts[].never[]: from_agent_prompts
   - extract.always[]: from_northstar_extract
   - extract.never[]: from_northstar_extract
+  - arch.model_strategy: from_architecture_blueprint
+  - arch.rag_assessment: from_architecture_blueprint
 
 outputs_produced:
   - testing.golden_dataset: used_by_ci_cd

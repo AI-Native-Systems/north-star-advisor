@@ -40,6 +40,11 @@ Request Trace (root span)
 | `llm.response` | LLM response received | completion_tokens, latency_ms |
 | `fallback.triggered` | Fallback used | agent_id, reason |
 | `circuit.opened` | Circuit breaker opened | agent_id, failure_count |
+| `embedding.request` | Embedding API call | model, input_tokens, dimensions |
+| `retrieval.search` | Vector search executed | query_type, results_count, latency_ms |
+| `retrieval.rerank` | Reranking applied | model, input_count, output_count |
+| `model.cost` | Token cost recorded | model, prompt_tokens, completion_tokens, cost_usd |
+| `quality.drift` | Output quality drift detected | metric, baseline, current, delta |
 
 ---
 
@@ -429,6 +434,19 @@ function calculateNorthStarMetrics(timeRange):
     },
   }
 ```
+
+### 7.5 Intelligence Layer Metrics
+
+> See also [INTELLIGENCE_LAYER.md](INTELLIGENCE_LAYER.md) for detailed quality metrics.
+> Metrics below are derived from Phase 6 model strategy and RAG assessment.
+
+| Metric | Description | Alert Threshold |
+|--------|-------------|-----------------|
+| `retrieval.precision` | Search result relevance | < [target] |
+| `retrieval.latency.p95` | Vector search latency | > [target]ms |
+| `model.cost.daily` | Per-model daily cost | > $[threshold] |
+| `model.quality.drift` | Output quality degradation | > [delta] from baseline |
+| `embedding.freshness` | Age of oldest embedding | > [threshold] hours |
 
 ---
 

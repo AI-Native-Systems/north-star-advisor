@@ -13,12 +13,12 @@
 counts:
   core: 12        # Always generated
   ux: 4           # Requires --ux flag
-  deep: 6         # Requires --deep flag
+  deep: 7         # Requires --deep flag
   total_base: 12  # Core only
   total_ux: 16    # Core + UX
-  total_deep: 18  # Core + Deep
-  total_full: 22  # Core + UX + Deep
-  # Plus ai-context.yml = 23 outputs with --full
+  total_deep: 19  # Core + Deep
+  total_full: 23  # Core + UX + Deep
+  # Plus ai-context.yml = 24 outputs with --full
 
 # Template definitions
 # Each template specifies:
@@ -238,6 +238,15 @@ templates:
     depends_on: [6, 7]
     notes: "Can run in parallel with other deep templates"
 
+  - name: INTELLIGENCE_LAYER
+    phase: "7d"
+    template: templates/architecture/INTELLIGENCE_LAYER_TEMPLATE.md
+    output: north-star-advisor/docs/architecture/INTELLIGENCE_LAYER.md
+    category: deep
+    flag: deep
+    depends_on: [6, 7]
+    notes: "Can run in parallel with other deep templates. Research intelligence-layer.md informs this phase. Extends model strategy from ARCHITECTURE_BLUEPRINT."
+
 # ─────────────────────────────────────────────────────
 # ADDITIONAL OUTPUTS (not templates)
 # ─────────────────────────────────────────────────────
@@ -249,4 +258,4 @@ outputs:
 
   - name: research/summary.md
     path: north-star-advisor/.work-in-progress/research/summary.md
-    description: "Synthesized research from 4 parallel agents"
+    description: "Synthesized research from 5 parallel agents"

@@ -74,6 +74,11 @@ Documents in the North Star methodology are interconnected. Each document builds
 │OBSERVE │ │TESTING │ │HANDOFF │
 │ ILITY  │ │STRATEGY│ │PROTOCOL│
 └────────┘ └────────┘ └────────┘
+┌────────┐
+│INTELLI │
+│ GENCE  │
+│ LAYER  │
+└────────┘
                │
                ▼
       ┌─────────────────┐
@@ -169,6 +174,16 @@ Documents in the North Star methodology are interconnected. Each document builds
 | `architecture.orchestration_pattern` | Coordination style |
 | `architecture.tools_per_agent` | Tool access |
 | `architecture.data_flow` | Handoff protocols |
+
+### ARCHITECTURE_BLUEPRINT → INTELLIGENCE_LAYER (--deep)
+
+| Source | Target |
+|--------|--------|
+| `architecture.agents[]` | Model routing per agent |
+| `architecture.tech_stack` | Infrastructure constraints |
+| `architecture.model_strategy` | Extends model decisions with depth |
+| `architecture.rag_assessment` | Extends RAG decision with full pipeline design |
+| `architecture.cost_projection` | Informs detailed cost modeling |
 
 ### ARCHITECTURE + AGENTS → SECURITY
 
@@ -273,7 +288,7 @@ When an upstream document changes, downstream documents may need regeneration.
 | BRAND_GUIDELINES | All downstream |
 | NORTHSTAR | Phases 3+ |
 | COMPETITIVE_LANDSCAPE | Phases 4+ |
-| ARCHITECTURE_BLUEPRINT | Phases 7+ |
+| ARCHITECTURE_BLUEPRINT | Phases 7+ (including INTELLIGENCE_LAYER) |
 | AGENT_PROMPTS | Phases 8+ |
 
 ### Update Strategy
@@ -297,8 +312,9 @@ Each phase extracts key data to `north-star-advisor/.work-in-progress/outputs/` 
 | BRAND_GUIDELINES | `product_name`, `beliefs[]`, `kill_list[]` |
 | NORTHSTAR | `metric`, `measurement`, `personas[]`, `phases[]` |
 | COMPETITIVE_LANDSCAPE | `competitors[]`, `differentiation[]` |
-| ARCHITECTURE_BLUEPRINT | `pattern`, `agents[]`, `tech_stack` |
+| ARCHITECTURE_BLUEPRINT | `pattern`, `agents[]`, `tech_stack`, `model_strategy`, `rag_assessment`, `cost_projection` |
 | AGENT_PROMPTS | `agents[].system_prompt`, `agents[].tools[]` |
+| INTELLIGENCE_LAYER | `retrieval_architecture`, `embedding_design`, `evaluation_framework`, `quality_metrics`, `model_routing` |
 | SECURITY_ARCHITECTURE | `auth_pattern`, `threats[]`, `guardrails[]` |
 
 ---

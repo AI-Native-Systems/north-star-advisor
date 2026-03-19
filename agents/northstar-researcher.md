@@ -176,7 +176,7 @@ north-star-advisor/.work-in-progress/research/
 ```
 
 **CRITICAL - Filename Rules:**
-- Use EXACTLY these filenames: `tech-stack.md`, `features-ux.md`, `architecture.md`, `pitfalls.md`, `summary.md`
+- Use EXACTLY these filenames: `tech-stack.md`, `features-ux.md`, `architecture.md`, `pitfalls.md`, `intelligence-layer.md`, `summary.md`
 - Do NOT add dates to filenames (e.g., NOT `tech-stack-2024-01-15.md`)
 - Do NOT add "research" to filenames (e.g., NOT `tech-stack-research.md`)
 - File timestamps track freshness, not filename conventions

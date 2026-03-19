@@ -203,6 +203,9 @@ G5d.5:
 | G6.5 | Data flow documented | WARNING | Data flow diagram or description |
 | G6.6 | Integration points listed | WARNING | External integrations identified |
 | G6.7 | Scalability addressed | WARNING | Scaling considerations noted |
+| G6.8 | Model rationale per agent | BLOCKING | Each agent in topology has model choice with brief rationale |
+| G6.9 | RAG assessment present | BLOCKING | Section 1.5 includes explicit RAG yes/no with reasoning |
+| G6.10 | Cost projection present | WARNING | Per-query and monthly cost estimate |
 
 ### G6 Failure Messages
 
@@ -243,6 +246,36 @@ G7.1:
 G7.6:
   message: "Agent '{agent}' missing required safety guardrails"
   fix: "Add to NEVER section: no medical/legal/personal advice, no harmful/violent/hateful/explicit content, redirect off-topic politely, stay within defined scope"
+```
+
+---
+
+## Phase 7d: INTELLIGENCE_LAYER (--deep)
+
+| Gate | Rule | Severity | Check |
+|------|------|----------|-------|
+| G7d.1 | Retrieval architecture defined | BLOCKING | RAG pipeline stages documented (or explicit "no RAG" with rationale) |
+| G7d.2 | Evaluation framework present | BLOCKING | At least 2 evaluation methods with quality metrics |
+| G7d.3 | Aligns with blueprint RAG assessment | BLOCKING | Consistent with `arch.rag_assessment` from Phase 6 |
+| G7d.4 | Embedding design (if RAG) | BLOCKING (conditional) | If RAG=yes, embedding model and dimensions specified |
+| G7d.5 | Data pipeline defined (if RAG) | WARNING | Ingestion and freshness documented |
+| G7d.6 | Model routing documented | WARNING | Fallback chains align with agent topology |
+| G7d.7 | Quality metrics measurable | WARNING | Metrics have numeric targets |
+
+### G7d Failure Messages
+
+```yaml
+G7d.1:
+  message: "Retrieval architecture not defined"
+  fix: "Document RAG pipeline stages or explain why retrieval is not needed"
+
+G7d.2:
+  message: "Evaluation framework incomplete"
+  fix: "Define at least 2 evaluation methods (e.g., golden datasets + LLM-as-judge)"
+
+G7d.3:
+  message: "Inconsistent with Architecture Blueprint RAG assessment"
+  fix: "Ensure retrieval architecture aligns with the RAG decision in ARCHITECTURE_BLUEPRINT Section 1.5"
 ```
 
 ---

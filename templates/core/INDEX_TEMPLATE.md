@@ -141,6 +141,12 @@ ARCHITECTURE_BLUEPRINT.md (Core)
     │   • PII sanitization
     │   • North Star instrumentation
     │
+    ├── architecture/INTELLIGENCE_LAYER.md
+    │   • Retrieval architecture
+    │   • Embedding design
+    │   • Evaluation framework
+    │   • Data pipeline
+    │
     └── architecture/TESTING_STRATEGY.md
         • Test categories and coverage
         • Test configuration
@@ -201,6 +207,7 @@ BRAND_GUIDELINES.md (Identity)
 | ↳ [architecture/AGENT_PROMPTS.md](architecture/AGENT_PROMPTS.md) | 2 | Agent contracts | System prompts, examples |
 | ↳ [architecture/IMPLEMENTATION_SCAFFOLD.md](architecture/IMPLEMENTATION_SCAFFOLD.md) | 2 | Code structure | Directory layout, base classes |
 | ↳ [architecture/OBSERVABILITY.md](architecture/OBSERVABILITY.md) | 2 | Tracing & metrics | Instrumentation, North Star |
+| ↳ [architecture/INTELLIGENCE_LAYER.md](architecture/INTELLIGENCE_LAYER.md) | 2 | Intelligence layer | Retrieval architecture, embedding design, evaluation framework, data pipeline |
 | ↳ [architecture/TESTING_STRATEGY.md](architecture/TESTING_STRATEGY.md) | 2 | Test patterns | Test config, golden datasets |
 | [SECURITY_ARCHITECTURE.md](SECURITY_ARCHITECTURE.md) | 2 | Security patterns | Auth, threats, compliance |
 | [BRAND_GUIDELINES.md](BRAND_GUIDELINES.md) | 3 | Brand identity | Voice, tone, visual standards |
@@ -271,6 +278,7 @@ BRAND_GUIDELINES.md (Identity - Step 1)
 | ↳ architecture/AGENT_PROMPTS.md | [Draft/Active] | [Date] |
 | ↳ architecture/IMPLEMENTATION_SCAFFOLD.md | [Draft/Active] | [Date] |
 | ↳ architecture/OBSERVABILITY.md | [Draft/Active] | [Date] |
+| ↳ architecture/INTELLIGENCE_LAYER.md | [Draft/Active] | [Date] |
 | ↳ architecture/TESTING_STRATEGY.md | [Draft/Active] | [Date] |
 | SECURITY_ARCHITECTURE.md | [Draft/Active] | [Date] |
 | ADR.md | [Draft/Active] | [Date] |

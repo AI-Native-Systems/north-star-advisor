@@ -32,7 +32,7 @@ COMMANDS
     Flags:
       --ux      Include UX design templates (USER_JOURNEYS, UI_DESIGN_SYSTEM, ACCESSIBILITY, etc.)
       --deep    Include deep architecture templates (PIPELINE, RESILIENCE, OBSERVABILITY, etc.)
-      --full    Include all 22 templates (equivalent to --ux --deep)
+      --full    Include all 23 templates (equivalent to --ux --deep)
 
   /northstar:advisor-build [options]
     Research and generate strategic documents.
@@ -98,7 +98,7 @@ GENERATION PHASES (see templates/index.yml for authoritative list)
   Deep templates (--deep flag):
     Phase 7d:     Advanced architecture patterns
 
-  Counts: 12 core + 4 ux + 6 deep = 22 total (+ ai-context.yml)
+  Counts: 12 core + 4 ux + 7 deep = 23 total (+ ai-context.yml)
 
 OUTPUT STRUCTURE
 

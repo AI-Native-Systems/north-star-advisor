@@ -29,6 +29,8 @@ Detailed implementation specifications are in `north-star-advisor/docs/architect
 | [IMPLEMENTATION_SCAFFOLD.md](architecture/IMPLEMENTATION_SCAFFOLD.md) | Directory structure, base classes, agent implementations, API routes |
 | [OBSERVABILITY.md](architecture/OBSERVABILITY.md) | Tracing infrastructure, handlers, sanitization, North Star instrumentation |
 | [TESTING_STRATEGY.md](architecture/TESTING_STRATEGY.md) | Test categories, configuration, golden datasets, integration tests |
+| [HANDOFF_PROTOCOL.md](architecture/HANDOFF_PROTOCOL.md) | Agent-to-agent handoff schema, validation, and recovery patterns |
+| [INTELLIGENCE_LAYER.md](architecture/INTELLIGENCE_LAYER.md) | Retrieval architecture, embedding design, evaluation framework, data pipeline |
 
 ---
 
@@ -111,13 +113,16 @@ Detailed implementation specifications are in `north-star-advisor/docs/architect
 
 ### 1.2 Agent Specifications
 
-| Agent | Model | Token Budget | Timeout | Input | Output | Dependencies |
-|-------|-------|--------------|---------|-------|--------|--------------|
-| `[agent_1]` | [Model] | [tokens] | [ms] | [input fields] | [output fields] | None |
-| `[agent_2]` | [Model] | [tokens] | [ms] | [input fields] | [output fields] | [dependencies] |
-| `[agent_3]` | [Model] | [tokens] | [ms] | [input fields] | [output fields] | None |
-| `[agent_4]` | [Model] | [tokens] | [ms] | [input fields] | [output fields] | [agent_1, agent_2, agent_3] |
-| `[agent_5]` | [Model] | [tokens] | [ms] | Full state | [output fields] | [agent_4] |
+| Agent | Model | Cost/1M tokens | Token Budget | Timeout | Input | Output | Dependencies |
+|-------|-------|----------------|--------------|---------|-------|--------|--------------|
+| `[agent_1]` | [Model] | $[X] | [tokens] | [ms] | [input fields] | [output fields] | None |
+| `[agent_2]` | [Model] | $[X] | [tokens] | [ms] | [input fields] | [output fields] | [dependencies] |
+| `[agent_3]` | [Model] | $[X] | [tokens] | [ms] | [input fields] | [output fields] | None |
+| `[agent_4]` | [Model] | $[X] | [tokens] | [ms] | [input fields] | [output fields] | [agent_1, agent_2, agent_3] |
+| `[agent_5]` | [Model] | $[X] | [tokens] | [ms] | Full state | [output fields] | [agent_4] |
+
+> **Model Selection Rationale**: [Brief explanation of why each agent uses its assigned model.
+> Consider: task complexity, latency requirements, cost budget, structured output needs.]
 
 > **Latency Budget**: Parallel phase ([X]s) + Sequential phase ([X]s + [X]s) = **<[X]s P95**
 >
@@ -185,6 +190,34 @@ shared ────────────────────────�
 | [agent_2] | [field] | [agent_4], [agent_5] | [purpose] |
 | [agent_3] | [field] | [agent_5] | [purpose] |
 | shared | [field] | [agent_4], [agent_5] | [purpose] |
+
+### 1.5 Model Strategy & RAG Assessment
+
+#### Model Approach
+[Single model | Multi-model with routing | Tiered (fast/standard/premium)]
+
+**Cost Projection:**
+| Metric | Estimate |
+|--------|----------|
+| Avg cost per query | $[X] |
+| Estimated monthly volume | [N] queries |
+| Projected monthly cost | $[X] |
+
+#### RAG Assessment
+**Does this system need retrieval-augmented generation?**
+
+[Yes / No] — [1-2 sentence rationale]
+
+[If yes:]
+- **Knowledge sources:** [what data agents need access to]
+- **Update cadence:** [how fresh the data must be]
+- **Pattern:** [Naive | Advanced | Modular | Agentic RAG]
+
+[If no:]
+- **Why not:** [agents rely on model knowledge / task doesn't require external data / etc.]
+
+> For detailed retrieval architecture, embedding design, and evaluation framework,
+> see [INTELLIGENCE_LAYER.md](architecture/INTELLIGENCE_LAYER.md) (generated with --deep)
 
 ---
 
@@ -273,6 +306,9 @@ Covers:
 | **Analytics** | [Analytics platform] | [Rationale] |
 | **Secrets** | [Secrets management] | [Rationale] |
 | **Testing** | [Test framework] | [Rationale] |
+| **Embedding Model** | [Model or N/A] | [Rationale — only if RAG applicable] |
+| **Vector Store** | [Provider or N/A] | [Rationale — only if RAG applicable] |
+| **Eval Framework** | [Framework or N/A] | [Rationale — only if evaluation needed] |
 
 ### Key Dependencies
 
@@ -468,6 +504,9 @@ outputs_produced:
   - arch.latency_budget: used_by_observability
   - arch.tech_stack: used_by_implementation_scaffold
   - arch.resilience_patterns: used_by_resilience_patterns
+  - arch.model_strategy: used_by_agent_prompts
+  - arch.rag_assessment: used_by_intelligence_layer, used_by_security
+  - arch.cost_projection: used_by_observability
 
 validation_gate:
   required_sections:
