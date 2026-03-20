@@ -71,18 +71,19 @@ WORKFLOW
      - Saves: discovery.md, inputs.yml, ai-context.yml
 
   2. /northstar:advisor-build
-     - Research phase: 4 parallel agents (tech, features, arch, pitfalls)
+     - Research phase: 5 parallel agents (tech, features, arch, pitfalls, intelligence layer)
      - Research checkpoint
-     - Generate 13 strategic documents
-     - Research informs phases 6, 7, 8
+     - Generate strategic documents
+     - Research informs phases 6, 7, 7d, 8
 
 RESEARCH PHASE
 
-  Before generation, 4 research agents run in parallel:
+  Before generation, 5 research agents run in parallel:
   - Tech Stack: Frameworks, libraries, best practices
   - Features & UX: Expected features, UX patterns
   - Architecture: Patterns, data flow, scalability
   - Pitfalls: Common mistakes, security concerns
+  - Intelligence Layer: Embedding models, RAG patterns, model routing, evaluation
 
   Research is cached for 24 hours.
 
