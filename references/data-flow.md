@@ -175,7 +175,7 @@ Documents in the North Star methodology are interconnected. Each document builds
 | `architecture.tools_per_agent` | Tool access |
 | `architecture.data_flow` | Handoff protocols |
 
-### ARCHITECTURE_BLUEPRINT → INTELLIGENCE_LAYER (--deep)
+### ARCHITECTURE_BLUEPRINT → INTELLIGENCE_LAYER
 
 | Source | Target |
 |--------|--------|

@@ -250,7 +250,7 @@ G7.6:
 
 ---
 
-## Phase 7d: INTELLIGENCE_LAYER (--deep)
+## Phase 7d: INTELLIGENCE_LAYER
 
 | Gate | Rule | Severity | Check |
 |------|------|----------|-------|

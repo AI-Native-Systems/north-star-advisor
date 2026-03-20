@@ -156,12 +156,17 @@ The 13-phase process reveals complexity progressively. Early phases establish co
 - Tech stack decisions
 - Data flow diagram
 - Integration points
+- Model strategy and cost projection
+- RAG assessment (yes/no with rationale)
 
 **Validation Gates:**
 - Agent topology defined
 - Orchestration pattern named
 - Each agent has clear responsibility
 - Tech stack specified
+- Model rationale per agent
+- RAG assessment present
+- Cost projection present
 
 **Dependencies:** Phases 1-4 (+ Phase 5 if --ux)
 
