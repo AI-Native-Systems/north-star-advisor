@@ -305,7 +305,7 @@ sources:
 
 ### Cache Invalidation
 
-- Default TTL: 7 days
+- Default TTL: 24 hours
 - Force refresh with `--no-cache` flag
 - Invalidate on major input changes
 - Keep archived versions for comparison
