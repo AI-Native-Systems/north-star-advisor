@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Security Architecture
 
-<!-- GENERATION: This is Step 8 of 13. Requires outputs from ARCHITECTURE_BLUEPRINT and BRAND_GUIDELINES. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 8 of 13. Requires outputs from ARCHITECTURE_BLUEPRINT and BRAND_GUIDELINES. See templates/index.yml -->
 
 > **Tier**: 2 — Implementation (see [INDEX.md](INDEX.md))
 > **Created**: [DATE]

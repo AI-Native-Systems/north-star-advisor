@@ -11,7 +11,14 @@ Research and generate strategic documents following the North Star methodology. 
 To find it:
 1. Check `state.json` for `plugin_index_path` (cached location)
 2. If not found, use Glob: `**/northstar/**/templates/index.yml`
-3. Update `state.json` with found path for future use
+   - If exactly 1 match: update `state.json` with found path
+   - If 0 matches: display "Could not locate `templates/index.yml` from cached state or fallback glob." and stop
+   - If multiple matches:
+     - List all found paths
+     - Use `AskUserQuestion` with each path as an option
+     - **Stop and wait** for the user's selection
+     - Store selected path in state.json as `plugin_index_path`
+     - Then continue
 
 ---
 
@@ -49,10 +56,13 @@ To find it:
 
 ```
 1. Read north-star-advisor/.work-in-progress/state.json
-2. Get plugin_index_path from state.json
-3. Read north-star-advisor/.work-in-progress/inputs.yml
-4. Get current flags: ux, deep, search_tool
-5. Get completed_phases array
+2. **Legacy state check:** If state.json contains `completed_phases` (pre-2.0.0 format):
+   - Display: "This project uses v1.x state format. Run /northstar:resume to migrate or start fresh."
+   - Stop generation. Do NOT proceed.
+3. Get plugin_index_path from state.json
+4. Read north-star-advisor/.work-in-progress/inputs.yml
+5. Get current flags: ux, deep, search_tool
+6. Get completed_templates array
 ```
 
 ### 0.2 Load Template Manifest
@@ -65,7 +75,14 @@ To find it:
 
 If `plugin_index_path` is missing from state.json:
 - Glob: `**/northstar/**/templates/index.yml`
-- Update state.json with found path
+- If exactly 1 match: update state.json with found path
+- If 0 matches: display "Could not locate `templates/index.yml` from cached state or fallback glob." and stop
+- If multiple matches:
+  - List all found paths
+  - Use `AskUserQuestion` with each path as an option
+  - **Stop and wait** for the user's selection
+  - Store selected path in state.json as `plugin_index_path`
+  - Then continue
 
 ### 0.3 Merge Command Flags
 
@@ -553,9 +570,9 @@ Update state.json: `research_complete: true`
    - Update state.json with merged values
 5. Determine which phases to generate:
    - Build full phase list based on merged flags
-   - Subtract `completed_phases` from state.json
+   - Subtract `completed_templates` from state.json
    - Apply `--from`, `--to`, `--only` filters if specified
-   - Result: phases that are enabled but not yet completed
+   - Result: templates that are enabled but not yet completed
 
 ## Step 2: Check Dependencies
 
@@ -568,9 +585,25 @@ For each phase to generate:
    - If yes, add to generation queue
    - If no, abort with error
 
-## Step 3: Generate Each Phase
+## Step 3: Generate Templates
 
-For each phase in order:
+**Core and UX templates:** Generate sequentially in dependency order (1 → 2 → ... → 7 → 8 → ... → 13, with 5a → 5b → 5c → 5d if --ux).
+
+**Deep templates (7d):** After Phase 7 completes, launch ALL deep templates in parallel using `run_in_background: true`. Each deep template gets its own generator agent. Wait for all to complete, then checkpoint each one individually before proceeding to Phase 8.
+
+```
+After Phase 7 completes (if --deep):
+  1. Spawn all 7d generators in parallel (run_in_background: true)
+  2. Wait for all to complete
+  3. For each completed deep template:
+     - Validate output
+     - Write checkpoint-{TEMPLATE_NAME}.json
+     - Update state.json (completed_templates, template_status, template_outputs)
+     - Update ai-context.yml
+  4. Proceed to Phase 8
+```
+
+For each template in generation order:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -585,7 +618,7 @@ For each phase in order:
 │     Store in inputs.yml under phase_decisions               │
 │                                                             │
 │  3. Gather Cross-References                                 │
-│     Read north-star-advisor/.work-in-progress/outputs/ from completed phases │
+│     Read north-star-advisor/.work-in-progress/outputs/ from completed templates │
 │     Build context from dependencies                         │
 │     Include research findings (for Phases 6, 7, 8)          │
 │                                                             │
@@ -621,18 +654,19 @@ For each phase in order:
 │        - Do NOT proceed until file verified                 │
 │     d. Write checkpoint file:                               │
 │        north-star-advisor/.work-in-progress/checkpoints/    │
-│        checkpoint-phase-{N}.json                            │
+│        checkpoint-{TEMPLATE_NAME}.json                      │
 │     e. Update state.json:                                   │
-│        - Add phase to completed_phases                      │
-│        - Set phase_status[N] = "complete"                   │
-│        - Set phase_outputs[N] = output_path                 │
+│        - Add TEMPLATE_NAME to completed_templates           │
+│        - Set template_status[TEMPLATE_NAME] = "complete"    │
+│        - Set template_outputs[TEMPLATE_NAME] = output_path  │
+│        - Set current_template = TEMPLATE_NAME               │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 
 ### Checkpoint File Format
 
 ```json
-// north-star-advisor/.work-in-progress/checkpoints/checkpoint-phase-{N}.json
+// north-star-advisor/.work-in-progress/checkpoints/checkpoint-{TEMPLATE_NAME}.json
 {
   "phase": "{N}",
   "template_name": "{TEMPLATE_NAME}",

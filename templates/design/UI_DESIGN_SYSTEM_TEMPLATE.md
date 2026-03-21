@@ -1,6 +1,6 @@
 # [PROJECT NAME]: UI Design System
 
-<!-- GENERATION: This is Step 5b (with --ux flag). Requires outputs from USER_JOURNEYS and BRAND_GUIDELINES. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 5b (with --ux flag). Requires outputs from USER_JOURNEYS and BRAND_GUIDELINES. See templates/index.yml -->
 
 > **Parent**: [../BRAND_GUIDELINES.md](../BRAND_GUIDELINES.md)
 > **Created**: [DATE]

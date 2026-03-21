@@ -41,6 +41,7 @@ COMMANDS
       --from <N>      Start from phase N
       --to <N>        Stop at phase N
       --only <N>      Regenerate only phase N
+      Note: phase numbers come from templates/index.yml
       --ux            Add UX templates (can extend existing project)
       --deep          Add deep architecture templates
       --full          Add all templates (equivalent to --ux --deep)
@@ -51,8 +52,8 @@ COMMANDS
   /northstar:resume [options]
     Resume from the last checkpoint.
     Options:
-      --restart       Restart current phase from scratch
-      --rollback      Go back to previous phase
+      --restart       Restart current template from scratch
+      --rollback      Go back to previous template
 
   /northstar:export [options]
     Package docs and ai-context.yml into a shareable zip.

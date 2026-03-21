@@ -14,13 +14,24 @@ Resume generation from the last checkpoint after interruption.
 
 ```
 1. Read: north-star-advisor/.work-in-progress/state.json
-2. Get: plugin_index_path from state.json
-3. Read: templates/index.yml at that exact path
+2. **Legacy state check:** If state.json contains "completed_phases" (pre-2.0.0 format):
+   - Go to Legacy State Detection section (Step L1)
+   - Do NOT continue into normal workflow
+   - Do NOT write any flag updates to state.json
+3. Get: plugin_index_path from state.json
+4. Read: templates/index.yml at that exact path
 ```
 
 If `plugin_index_path` is missing from state.json:
 - Glob: `**/northstar/**/templates/index.yml`
-- Update state.json with found path
+- If exactly 1 match: update state.json with found path
+- If 0 matches: display "Could not locate `templates/index.yml` from cached state or fallback glob." and stop
+- If multiple matches:
+  - List all found paths
+  - Use `AskUserQuestion` with each path as an option
+  - **Stop and wait** for the user's selection
+  - Store selected path in state.json as `plugin_index_path`
+  - Then continue
 
 **Rules:**
 - **NEVER** hallucinate document names - only use names from index.yml
@@ -41,8 +52,8 @@ If `plugin_index_path` is missing from state.json:
 | `--deep` | Add deep architecture templates. Updates state.json. |
 | `--full` | Enable all templates (--ux + --deep). Updates state.json. |
 | `--search-tool <tool>` | Override search tool. Updates state.json. |
-| `--restart` | Restart current phase from scratch |
-| `--rollback` | Go back to previous phase |
+| `--restart` | Restart current template from scratch |
+| `--rollback` | Go back to previous template |
 | `--checkpoint <name>` | Resume from specific checkpoint |
 
 ---
@@ -50,7 +61,7 @@ If `plugin_index_path` is missing from state.json:
 ## Prerequisites
 
 - Project must be initialized with `/northstar:advisor`
-- At least one checkpoint must exist in `north-star-advisor/.work-in-progress/checkpoints/`
+- At least one checkpoint must exist in `north-star-advisor/.work-in-progress/checkpoints/`, OR legacy v1.x state is detected (handled via Legacy State Detection)
 
 ---
 
@@ -60,7 +71,8 @@ If `plugin_index_path` is missing from state.json:
 
 1. Read `templates/index.yml` to get the authoritative template list
 2. Read `north-star-advisor/.work-in-progress/state.json`
-3. **Update state.json if command-line flags were passed:**
+3. **If legacy state was detected in FIRST section, skip to Legacy State Detection (Step L1).**
+4. **Update state.json if command-line flags were passed:**
    - If `--full`: set `ux: true` and `deep: true`
    - If `--ux`: set `ux: true`
    - If `--deep`: set `deep: true`
@@ -87,13 +99,13 @@ Run /northstar:advisor to start a new project.
 
 ```
 1. Read all checkpoint files from:
-   north-star-advisor/.work-in-progress/checkpoints/checkpoint-phase-*.json
+   north-star-advisor/.work-in-progress/checkpoints/checkpoint-*.json
 
 2. For each checkpoint:
    a. Read checkpoint.output_path
    b. Check if file exists
    c. Check if file size > 0
-   d. Record: { phase, template_name, exists, size }
+   d. Record: { template_name, exists, size }
 
 3. If any checkpoint files are missing:
    Display warning:
@@ -104,8 +116,8 @@ Run /northstar:advisor to start a new project.
 
    The following previously generated files are missing:
 
-   ✗ Phase 2: NORTHSTAR.md
-   ✗ Phase 3: COMPETITIVE_LANDSCAPE.md
+   ✗ NORTHSTAR.md
+   ✗ COMPETITIVE_LANDSCAPE.md
 
    Options:
    1. Regenerate missing files before continuing
@@ -156,7 +168,7 @@ AVAILABLE OPTIONS
   --ux              Add UX templates (if not already enabled)
   --deep            Add deep architecture templates
   --search-tool     Override search tool (e.g., pplx)
-  --restart         Restart current phase from scratch
+  --restart         Restart current template from scratch
   --rollback        Go back to previous checkpoint
 
 How would you like to proceed?
@@ -169,7 +181,7 @@ Use `AskUserQuestion` with options:
 - "Add --ux templates"
 - "Add --deep templates"
 - "Change search tool"
-- "Restart current phase"
+- "Restart current template"
 - "View generated documents"
 
 If user selects a flag option:
@@ -183,38 +195,39 @@ Only proceed after user confirms "Continue generation".
 
 #### Continue (default)
 
-1. Load current phase state
-2. Resume generation from last step
+1. Load current_template from state
+2. Resume generation from that template
 3. If mid-generation:
-   - Check if partial output exists
+   - Check if partial output exists at template.output path
    - Offer to keep or regenerate
-4. Hand off to `/northstar:advisor-build --from <phase>`
+4. Hand off to /northstar:advisor-build with remaining templates
 
 #### --restart
 
-1. Clear current phase outputs
-2. Reset phase status to "pending"
-3. Start phase from beginning
-4. Preserve all previous phases
+1. Clear current template output (the file at template.output)
+2. Reset template_status[TEMPLATE_NAME] to "pending"
+3. Remove TEMPLATE_NAME from completed_templates
+4. Start that template from beginning
+5. For deep templates: --restart TEMPLATE_NAME restarts one specific template
 
 #### --rollback
 
-1. Load previous checkpoint
-2. Reset current phase status
-3. Delete current phase outputs (optional)
-4. Resume from previous phase
+1. Load previous checkpoint (checkpoint-{TEMPLATE_NAME}.json)
+2. Reset current template status
+3. Delete current template output (optional)
+4. Resume from previous template in generation order
 
 #### --checkpoint <name>
 
-1. Load specified checkpoint
-2. Reset all phases after checkpoint
+1. Load specified checkpoint (checkpoint-{TEMPLATE_NAME}.json)
+2. Reset all templates after that point in generation order
 3. Offer to delete outputs after checkpoint
-4. Resume from checkpoint phase
+4. Resume from checkpoint template
 
 ### Step 5: Confirm and Execute
 
 ```
-Resuming from Phase 6: ARCHITECTURE_BLUEPRINT
+Resuming from template: ARCHITECTURE_BLUEPRINT
 
 Previous inputs preserved:
   • Orchestration pattern: Hybrid
@@ -223,7 +236,7 @@ Previous inputs preserved:
 Continue? (Y/n)
 ```
 
-If confirmed, hand off to `/northstar:advisor-build --from <phase>`
+If confirmed, hand off to `/northstar:advisor-build` with remaining templates
 
 ---
 
@@ -232,7 +245,7 @@ If confirmed, hand off to `/northstar:advisor-build --from <phase>`
 Each phase creates its own checkpoint file:
 
 ```json
-// north-star-advisor/.work-in-progress/checkpoints/checkpoint-phase-{N}.json
+// north-star-advisor/.work-in-progress/checkpoints/checkpoint-{TEMPLATE_NAME}.json
 {
   "phase": "{N}",
   "template_name": "{TEMPLATE_NAME from index.yml}",
@@ -252,7 +265,7 @@ Each phase creates its own checkpoint file:
 ### Scenario 1: Interrupted Mid-Generation
 
 ```
-Detected: Partial output for Phase 6
+Detected: Partial output for ARCHITECTURE_BLUEPRINT
 
 north-star-advisor/docs/ARCHITECTURE_BLUEPRINT.md exists but is incomplete.
 
@@ -265,11 +278,11 @@ Options:
 ### Scenario 2: Validation Failed
 
 ```
-Phase 6 failed validation:
+ARCHITECTURE_BLUEPRINT failed validation:
   Error: Agent topology section missing
 
 Options:
-1. Regenerate Phase 6
+1. Regenerate ARCHITECTURE_BLUEPRINT
 2. Manually fix and re-validate
 3. Skip validation (not recommended)
 ```
@@ -280,7 +293,7 @@ Options:
 Warning: State file appears corrupted.
 
 Attempting recovery from last checkpoint...
-Found: phase-5-northstar-extract (2024-01-15 14:30)
+Found: checkpoint-NORTHSTAR_EXTRACT (last modified)
 
 Restore from this checkpoint? (Y/n)
 ```
@@ -330,6 +343,125 @@ Update `state.json` with cross-check results:
   }
 }
 ```
+
+---
+
+## Legacy State Detection
+
+If state.json contains `completed_phases` (pre-2.0.0 format), **stop and prompt the user**. Do NOT auto-migrate.
+
+### Step L1: Display Incompatibility Notice
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ INCOMPATIBLE STATE FORMAT (v1.x detected)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This project was created with North Star Advisor v1.x.
+Version 2.0.0 uses a new state format:
+
+  v1.x: phase-keyed   (completed_phases, phase_status)
+  v2.0: template-keyed (completed_templates, template_status)
+
+Your generated documents are still intact in:
+  north-star-advisor/docs/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Step L2: Ask User How to Proceed
+
+Use `AskUserQuestion` with options:
+- "Migrate existing state to v2.0.0 format"
+- "Start fresh (keep existing docs as reference)"
+- "Cancel"
+
+### Step L3a: If "Migrate"
+
+**Gather information before migrating.**
+
+1. Read old state.json fields: `completed_phases`, `phase_status`, `phase_outputs`, `ux`, `deep`
+2. Read templates/index.yml
+3. **Filter templates to the legacy project's enabled set:**
+   - Include all templates where `flag: null` (core — always enabled)
+   - If old state `ux: true`: include templates where `flag: ux`
+   - If old state `deep: true`: include templates where `flag: deep`
+   - This is the **enabled template set** — only these are relevant for migration
+4. **Verify output files only for enabled templates**
+   - For each enabled template, check if `template.output` file exists and size > 0
+   - Build a verified list of actually-completed enabled templates
+5. **Handle ambiguous "7d" entries:**
+   - If old `completed_phases` contains "7d" AND old state `deep: true`:
+     - List only the enabled deep templates
+     - Check which enabled deep template outputs actually exist
+     - Display findings to user:
+       ```
+       Found "7d" in completed_phases. Checking enabled deep template outputs:
+
+         ✓ PIPELINE_ORCHESTRATION     (45,231 bytes)
+         ✓ RESILIENCE_PATTERNS        (38,102 bytes)
+         ✓ IMPLEMENTATION_SCAFFOLD    (52,887 bytes)
+         ✓ OBSERVABILITY              (41,003 bytes)
+         ✓ TESTING_STRATEGY           (36,455 bytes)
+         ✓ HANDOFF_PROTOCOL           (29,771 bytes)
+         ✗ INTELLIGENCE_LAYER         (not found — new in v2.0.0)
+
+       Mark the 6 found templates as complete?
+       ```
+     - Use `AskUserQuestion` to confirm
+   - If old `completed_phases` contains "7d" but `deep: false`: ignore — deep was not enabled
+6. **Display migration summary before writing:**
+   ```
+   Migration Summary:
+
+   Enabled flags: [ux: true/false, deep: true/false]
+
+   Templates to mark complete: [N] / [total enabled]
+     [list each with ✓]
+
+   Templates remaining: [M]
+     [list each enabled but incomplete with ○]
+
+   Proceed with migration?
+   ```
+7. **If confirmed, write new state.json:**
+   - Create `completed_templates` from verified artifacts
+   - Create `template_status` from verified artifacts
+   - Create `template_outputs` from verified paths
+   - Set `current_template` to the first enabled template in generation order that is NOT in `completed_templates` (if all complete, set to `null`)
+   - Remove old fields (`completed_phases`, `phase_status`, `phase_outputs`, `current_phase`)
+   - Write updated state.json
+8. **Replace legacy checkpoints with v2 checkpoints:**
+   - Delete all `checkpoint-phase-*.json` files from `north-star-advisor/.work-in-progress/checkpoints/`
+   - For each template in `completed_templates`, synthesize a v2 checkpoint file:
+     ```json
+     // checkpoint-{TEMPLATE_NAME}.json
+     {
+       "phase": "{phase from index.yml}",
+       "template_name": "{TEMPLATE_NAME}",
+       "output_path": "{template.output from index.yml}",
+       "generated_at": "{ISO-8601 timestamp of migration}",
+       "source": "migrated_from_v1",
+       "verified": true,
+       "file_size_bytes": {actual file size from verification step}
+     }
+     ```
+   - This ensures rollback, --checkpoint, and checkpoint verification work correctly for migrated templates
+   - Display: "State migrated to v2.0.0 format. Run /northstar:resume to continue."
+
+   This ensures `/northstar:resume` continues from the next pending template, not the last completed template.
+
+### Step L3b: If "Start fresh"
+
+1. Ask: "Delete working state? Your docs in north-star-advisor/docs/ will be preserved."
+2. If confirmed:
+   - Delete `north-star-advisor/.work-in-progress/` directory
+   - Display: "Working state cleared. Run /northstar:advisor to start fresh."
+   - Existing docs remain as reference
+
+### Step L3c: If "Cancel"
+
+1. Display: "No changes made. You can continue using the v1.x plugin or run this command again."
 
 ---
 

@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Competitive Landscape
 
-<!-- GENERATION: This is Step 3 of 13. Generate after NORTHSTAR, before NORTHSTAR_EXTRACT. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 3 of 13. Generate after NORTHSTAR, before NORTHSTAR_EXTRACT. See templates/index.yml -->
 
 > **Tier**: 1 — Strategic Authority
 > **Parent**: [NORTHSTAR.md](NORTHSTAR.md)

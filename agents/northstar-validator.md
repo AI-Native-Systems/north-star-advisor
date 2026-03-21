@@ -57,6 +57,7 @@ cross_refs:
 | G1.3 | Kill list has items | BLOCKING |
 | G1.4 | Voice/tone section present | WARNING |
 | G1.5 | No placeholder text | BLOCKING |
+| G1.6 | Positioning section complete | WARNING |
 
 ### NORTHSTAR
 
@@ -68,6 +69,7 @@ cross_refs:
 | G2.4 | Each persona has goal + pain | BLOCKING |
 | G2.5 | Success phases defined | BLOCKING |
 | G2.6 | Scope boundaries clear | WARNING |
+| G2.7 | Metric example provided | WARNING |
 
 ### COMPETITIVE_LANDSCAPE
 
@@ -78,6 +80,8 @@ cross_refs:
 | G3.3 | Differentiation stated | BLOCKING |
 | G3.4 | Market trends section | WARNING |
 | G3.5 | No competitor placeholders | BLOCKING |
+| G3.6 | Pricing information | WARNING |
+| G3.7 | Sources cited | WARNING |
 
 ### NORTHSTAR_EXTRACT
 
@@ -87,6 +91,7 @@ cross_refs:
 | G4.2 | Non-goals listed | BLOCKING |
 | G4.3 | Constraints identified | WARNING |
 | G4.4 | Cross-refs to source docs | BLOCKING |
+| G4.5 | Axioms are actionable | WARNING |
 
 ### ARCHITECTURE_BLUEPRINT
 
@@ -98,6 +103,10 @@ cross_refs:
 | G6.4 | Tech stack specified | BLOCKING |
 | G6.5 | Data flow documented | WARNING |
 | G6.6 | Integration points listed | WARNING |
+| G6.7 | Scalability addressed | WARNING |
+| G6.8 | Model rationale per agent | BLOCKING |
+| G6.9 | RAG assessment present | BLOCKING |
+| G6.10 | Cost projection present | WARNING |
 
 ### AGENT_PROMPTS
 
@@ -107,6 +116,8 @@ cross_refs:
 | G7.2 | Tools listed per agent | BLOCKING |
 | G7.3 | Example I/O provided | WARNING |
 | G7.4 | Handoff protocol defined | WARNING |
+| G7.5 | Error handling specified | WARNING |
+| G7.6 | Safety guardrails included | BLOCKING |
 
 ### SECURITY_ARCHITECTURE
 
@@ -117,6 +128,7 @@ cross_refs:
 | G8.3 | Data classification | BLOCKING |
 | G8.4 | Safety guardrails | BLOCKING |
 | G8.5 | Incident response | WARNING |
+| G8.6 | Audit logging | WARNING |
 
 ### INDEX
 
@@ -126,6 +138,140 @@ cross_refs:
 | G13.2 | Links resolve | BLOCKING |
 | G13.3 | Summary present | WARNING |
 | G13.4 | Navigation clear | WARNING |
+| G13.5 | Quick start section | WARNING |
+
+### USER_JOURNEYS
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G5a.1 | Journey per persona | BLOCKING |
+| G5a.2 | Friction points identified | BLOCKING |
+| G5a.3 | Success moments defined | BLOCKING |
+| G5a.4 | Emotional states mapped | WARNING |
+
+**Key failure messages:**
+- G5a.1: "Missing journey for persona '{persona}'" -> Fix: "Add journey map for each persona from NORTHSTAR"
+- G5a.2: "No friction points in journey" -> Fix: "Identify where users struggle in each journey step"
+- G5a.3: "No success moments in journey" -> Fix: "Define moments of delight or achievement in the journey"
+
+### UI_DESIGN_SYSTEM
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G5b.1 | Color palette defined | BLOCKING |
+| G5b.2 | Typography scale | BLOCKING |
+| G5b.3 | Spacing system | WARNING |
+| G5b.4 | Component patterns | WARNING |
+
+**Key failure messages:**
+- G5b.1: "Color palette not defined" -> Fix: "Define primary, secondary, and accent colors"
+- G5b.2: "Typography scale missing" -> Fix: "Specify font families and sizes for headings and body"
+- G5b.4: "No component patterns" -> Fix: "Include at least 3 component examples (e.g., buttons, cards, forms)"
+
+### ACCESSIBILITY
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G5c.1 | WCAG level stated | BLOCKING |
+| G5c.2 | Keyboard patterns | BLOCKING |
+| G5c.3 | Screen reader patterns | WARNING |
+| G5c.4 | Testing protocol | WARNING |
+
+**Key failure messages:**
+- G5c.1: "WCAG compliance level not stated" -> Fix: "Specify AA or AAA compliance target"
+- G5c.2: "Keyboard navigation not described" -> Fix: "Document keyboard navigation patterns for all interactive elements"
+- G5c.3: "Screen reader patterns missing" -> Fix: "Include ARIA guidelines and screen reader considerations"
+
+### WIREFRAMES
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G5d.1 | At least 5 core screens | BLOCKING |
+| G5d.2 | Design tokens referenced | BLOCKING |
+| G5d.3 | Accessibility per screen | BLOCKING |
+| G5d.4 | Brand voice validation | BLOCKING |
+| G5d.5 | Implementation priority | BLOCKING |
+| G5d.6 | Banned elements listed | WARNING |
+| G5d.7 | Emotional states annotated | WARNING |
+
+**Key failure messages:**
+- G5d.1: "Only {count} core screens found (minimum 5 required)" -> Fix: "Add ASCII wireframes for at least 5 core screens"
+- G5d.2: "Design tokens not referenced" -> Fix: "Reference tokens from UI_DESIGN_SYSTEM.md (e.g., --color-accent, --space-4)"
+- G5d.3: "Screen '{screen}' missing accessibility checklist" -> Fix: "Add accessibility requirements section to each screen wireframe"
+
+### INTELLIGENCE_LAYER
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G7d.1 | Retrieval architecture defined | BLOCKING |
+| G7d.2 | Evaluation framework present | BLOCKING |
+| G7d.3 | Aligns with blueprint RAG assessment | BLOCKING |
+| G7d.4 | Embedding design (if RAG) | BLOCKING (conditional) |
+| G7d.5 | Data pipeline defined (if RAG) | WARNING |
+| G7d.6 | Model routing documented | WARNING |
+| G7d.7 | Quality metrics measurable | WARNING |
+
+**Key failure messages:**
+- G7d.1: "Retrieval architecture not defined" -> Fix: "Document RAG pipeline stages or explain why retrieval is not needed"
+- G7d.2: "Evaluation framework incomplete" -> Fix: "Define at least 2 evaluation methods (e.g., golden datasets + LLM-as-judge)"
+- G7d.3: "Inconsistent with Architecture Blueprint RAG assessment" -> Fix: "Ensure retrieval architecture aligns with the RAG decision in ARCHITECTURE_BLUEPRINT Section 1.5"
+
+### ADR
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G9.1 | At least 3 decisions | BLOCKING |
+| G9.2 | Each has context | BLOCKING |
+| G9.3 | Each has decision | BLOCKING |
+| G9.4 | Alternatives documented | WARNING |
+| G9.5 | Consequences noted | WARNING |
+
+**Key failure messages:**
+- G9.1: "Only {count} ADR(s) found (minimum 3 required)" -> Fix: "Add more architectural decision records covering key technical choices"
+- G9.2: "ADR '{adr}' missing context section" -> Fix: "Add Context section explaining the background and forces"
+- G9.3: "ADR '{adr}' missing decision section" -> Fix: "Add Decision section stating the chosen approach"
+
+### POST_DEPLOYMENT
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G10.1 | Monitoring strategy | BLOCKING |
+| G10.2 | Key metrics defined | BLOCKING |
+| G10.3 | Alerting thresholds | WARNING |
+| G10.4 | Runbook present | WARNING |
+
+**Key failure messages:**
+- G10.1: "Monitoring strategy not defined" -> Fix: "Add ## Monitoring section with observability approach"
+- G10.2: "Key metrics not defined" -> Fix: "List metrics to track post-deployment (e.g., latency, error rate, usage)"
+- G10.3: "Alerting thresholds missing" -> Fix: "Specify alert conditions and escalation procedures"
+
+### STRATEGIC_RECOMMENDATION
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G11.1 | Recommended path stated | BLOCKING |
+| G11.2 | Trade-offs analyzed | BLOCKING |
+| G11.3 | Alternatives presented | WARNING |
+| G11.4 | Risk assessment | WARNING |
+
+**Key failure messages:**
+- G11.1: "No clear recommendation stated" -> Fix: "Add explicit recommended path with rationale"
+- G11.2: "Trade-offs not analyzed" -> Fix: "Add ## Trade-offs section comparing cost, speed, and quality"
+- G11.4: "Risk assessment missing" -> Fix: "Identify risks and their mitigation strategies"
+
+### ACTION_ROADMAP
+
+| Gate | Rule | Severity |
+|------|------|----------|
+| G12.1 | 30-day actions | BLOCKING |
+| G12.2 | Actions are specific | BLOCKING |
+| G12.3 | Dependencies noted | WARNING |
+| G12.4 | Success criteria | WARNING |
+
+**Key failure messages:**
+- G12.1: "No 30-day actions listed" -> Fix: "Add near-term actions for the first 30 days"
+- G12.2: "Actions are too vague" -> Fix: "Replace vague actions (e.g., 'improve') with specific deliverables"
+- G12.4: "Success criteria missing" -> Fix: "Define how to know each action is complete"
 
 ---
 

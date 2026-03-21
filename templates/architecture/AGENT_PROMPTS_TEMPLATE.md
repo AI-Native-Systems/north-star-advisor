@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Agent Prompts
 
-<!-- GENERATION: This is Step 7 of 13. Requires outputs from ARCHITECTURE_BLUEPRINT and NORTHSTAR_EXTRACT. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 7 of 13. Requires outputs from ARCHITECTURE_BLUEPRINT and NORTHSTAR_EXTRACT. See templates/index.yml -->
 
 > **Parent**: [ARCHITECTURE_BLUEPRINT.md](../ARCHITECTURE_BLUEPRINT.md)
 > **Created**: [DATE]

@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Post-Deployment Operations
 
-<!-- GENERATION: This is Step 10 of 13. Requires outputs from NORTHSTAR and ARCHITECTURE_BLUEPRINT. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 10 of 13. Requires outputs from NORTHSTAR and ARCHITECTURE_BLUEPRINT. See templates/index.yml -->
 
 > **Tier**: 2 — Implementation (see [INDEX.md](INDEX.md))
 > **Created**: [DATE]

@@ -49,7 +49,7 @@ Finds and analyzes direct competitors.
 1. `"{problem_domain}" tools alternatives`
 2. `"{target_users}" software solutions`
 3. `"similar to {application_name}" OR "alternative to {application_name}"`
-4. `"{key_feature}" tools comparison 2024`
+4. `"{key_feature}" tools comparison`
 
 **Data Extracted:**
 - Company/product name
@@ -64,7 +64,7 @@ Finds and analyzes direct competitors.
 Analyzes market trends and opportunities.
 
 **Search Queries Generated:**
-1. `"{industry}" market trends 2024`
+1. `"{industry}" market trends`
 2. `"{problem_domain}" industry report`
 3. `"{target_users}" pain points survey`
 4. `"{technology_area}" adoption statistics`
@@ -81,7 +81,7 @@ Analyzes market trends and opportunities.
 Evaluates technology choices and patterns.
 
 **Search Queries Generated:**
-1. `"{technology}" best practices 2024`
+1. `"{technology}" best practices`
 2. `"{architecture_pattern}" case studies`
 3. `"{framework}" vs alternatives comparison`
 4. `"{technology}" production deployment`
@@ -177,7 +177,7 @@ north-star-advisor/.work-in-progress/research/
 
 **CRITICAL - Filename Rules:**
 - Use EXACTLY these filenames: `tech-stack.md`, `features-ux.md`, `architecture.md`, `pitfalls.md`, `intelligence-layer.md`, `summary.md`
-- Do NOT add dates to filenames (e.g., NOT `tech-stack-2024-01-15.md`)
+- Do NOT add dates to filenames (e.g., NOT `tech-stack-YYYY-MM-DD.md`)
 - Do NOT add "research" to filenames (e.g., NOT `tech-stack-research.md`)
 - File timestamps track freshness, not filename conventions
 
@@ -190,7 +190,7 @@ north-star-advisor/.work-in-progress/research/
 ```yaml
 success: true
 research_type: "competitive"
-timestamp: "2024-01-15T14:30:00Z"
+timestamp: "[ISO-8601 timestamp]"
 
 competitors_found: 5
 sources_analyzed: 12
@@ -226,7 +226,7 @@ cache_path: "north-star-advisor/.work-in-progress/research/"  # Files: tech-stac
 ```yaml
 success: true
 research_type: "competitive"
-timestamp: "2024-01-15T14:30:00Z"
+timestamp: "[ISO-8601 timestamp]"
 
 competitors_found: 3
 sources_analyzed: 8
@@ -251,7 +251,7 @@ error: "Search rate limited"
 partial_results:
   competitors_found: 1
 retry_after: "300 seconds"
-fallback: "Use cached research from 2024-01-10"
+fallback: "Use cached research from [cached date]"
 ```
 
 ---
@@ -261,7 +261,6 @@ fallback: "Use cached research from 2024-01-10"
 ### Query Construction
 
 - Use specific, targeted queries
-- Include year for recency
 - Combine product category with use case
 - Avoid overly broad terms
 
@@ -290,7 +289,7 @@ fallback: "Use cached research from 2024-01-10"
 # Filename must be exactly: tech-stack.md, features-ux.md, architecture.md, pitfalls.md, or summary.md
 metadata:
   research_type: "competitive"
-  created_at: "2024-01-15T14:30:00Z"  # Timestamp inside file, not in filename
+  created_at: "[ISO-8601 timestamp]"  # Timestamp inside file, not in filename
   queries_used: 8
   sources_analyzed: 12
 
@@ -300,7 +299,7 @@ data:
 
 sources:
   - url: "https://..."
-    accessed: "2024-01-15"
+    accessed: "[YYYY-MM-DD]"
     type: "product_page"
 ```
 

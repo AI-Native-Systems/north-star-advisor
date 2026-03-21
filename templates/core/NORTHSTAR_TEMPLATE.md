@@ -1,6 +1,6 @@
 # [PROJECT NAME]: North Star Specification
 
-<!-- GENERATION: This is Step 2 of 13. Requires outputs from BRAND_GUIDELINES. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 2 of 13. Requires outputs from BRAND_GUIDELINES. See templates/index.yml -->
 
 > **Tier**: 1 — Strategic Authority
 > **Created**: [DATE]

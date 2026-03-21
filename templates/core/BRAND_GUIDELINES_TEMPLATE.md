@@ -1,6 +1,6 @@
 # [PROJECT NAME]™: Brand Guidelines
 
-<!-- GENERATION: This is Step 1 of 13 in the generation order. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 1 of 13 in the generation order. See templates/index.yml -->
 
 > **Tier**: 3 — Supporting (see [INDEX.md](INDEX.md))
 > **Created**: [DATE]

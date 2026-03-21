@@ -64,10 +64,18 @@ Structure depends on which flags were enabled. Only include files that actually 
 2. Glob `north-star-advisor/docs/**/*.md`
 3. Build file manifest
 
+### Step 2.5: Resolve Output Path
+
+1. If `--output <path>` was provided, use that path
+2. Otherwise, default to `north-star-advisor-export.zip`
+3. Resolve to absolute path before any directory changes
+4. If parent directory doesn't exist, create it
+
 ### Step 3: Create Zip
 
 ```bash
-cd north-star-advisor && zip -r ../north-star-advisor-export.zip ai-context.yml docs/
+# OUTPUT_PATH = absolute path from Step 2.5
+zip -r "${OUTPUT_PATH}" north-star-advisor/ai-context.yml north-star-advisor/docs/
 ```
 
 ### Step 4: Display Summary and CLAUDE.md Instructions
@@ -77,7 +85,7 @@ cd north-star-advisor && zip -r ../north-star-advisor-export.zip ai-context.yml 
  NORTH STAR ADVISOR ► EXPORT COMPLETE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Created: north-star-advisor-export.zip
+Created: [OUTPUT_PATH]
 
 Contents:
   • ai-context.yml (strategic context)

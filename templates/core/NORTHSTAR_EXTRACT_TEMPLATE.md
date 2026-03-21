@@ -1,6 +1,6 @@
 # [PROJECT NAME]: North Star Extract
 
-<!-- GENERATION: This is Step 4 of 13. Requires outputs from BRAND_GUIDELINES, NORTHSTAR, and COMPETITIVE_LANDSCAPE. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 4 of 13. Requires outputs from BRAND_GUIDELINES, NORTHSTAR, and COMPETITIVE_LANDSCAPE. See templates/index.yml -->
 
 > Your project's design DNA — the decisions that should NOT be re-litigated.
 > **Generation Step**: 4 of 13 — Requires `brand.beliefs[]`, `northstar.metric`, `northstar.kill_list[]`, `competitive.rejected_moves[]`

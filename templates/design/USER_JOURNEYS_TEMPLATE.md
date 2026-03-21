@@ -1,6 +1,6 @@
 # [PROJECT_NAME]: User Journey Maps
 
-<!-- GENERATION: This is Step 5a (with --ux flag). Generate first in design/ sequence, informs architecture. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 5a (with --ux flag). Generate first in design/ sequence, informs architecture. See templates/index.yml -->
 
 > **Parent**: [../NORTHSTAR_EXTRACT.md](../NORTHSTAR_EXTRACT.md)
 > **Created**: [DATE]

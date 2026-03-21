@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Action Roadmap
 
-<!-- GENERATION: This is Step 12 of 13. Generate after STRATEGIC_RECOMMENDATION, before INDEX. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 12 of 13. Generate after STRATEGIC_RECOMMENDATION, before INDEX. See templates/index.yml -->
 
 > **Tier**: 1 — Strategic Authority
 > **Parent**: [STRATEGIC_RECOMMENDATION.md](STRATEGIC_RECOMMENDATION.md)

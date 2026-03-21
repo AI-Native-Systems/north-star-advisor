@@ -1,6 +1,6 @@
 # [PROJECT_NAME]: Wireframes
 
-<!-- GENERATION: This is Step 5d (with --ux flag). Generate after USER_JOURNEYS, UI_DESIGN_SYSTEM, and ACCESSIBILITY. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 5d (with --ux flag). Generate after USER_JOURNEYS, UI_DESIGN_SYSTEM, and ACCESSIBILITY. See templates/index.yml -->
 
 > **Parent**: [UI_DESIGN_SYSTEM.md](UI_DESIGN_SYSTEM.md)
 > **Related**: [USER_JOURNEYS.md](USER_JOURNEYS.md), [ACCESSIBILITY.md](ACCESSIBILITY.md), [../BRAND_GUIDELINES.md](../BRAND_GUIDELINES.md)

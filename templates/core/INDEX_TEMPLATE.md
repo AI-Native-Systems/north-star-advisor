@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Documentation Index
 
-<!-- GENERATION: This is Step 13 of 13. Generate LAST after all other documents. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 13 of 13. Generate LAST after all other documents. See templates/index.yml -->
 
 > **Last Updated**: [DATE]
 > **Purpose**: Single source of truth for documentation structure and hierarchy

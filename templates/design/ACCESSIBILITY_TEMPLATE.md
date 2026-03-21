@@ -1,6 +1,6 @@
 # [PROJECT_NAME]: Accessibility Strategy
 
-<!-- GENERATION: This is Step 5c (with --ux flag). Generate after USER_JOURNEYS, parallel with UI_DESIGN_SYSTEM. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 5c (with --ux flag). Generate after UI_DESIGN_SYSTEM (5b). Sequential: 5a → 5b → 5c → 5d. See templates/index.yml -->
 
 > **Parent**: [USER_JOURNEYS.md](USER_JOURNEYS.md)
 > **Related**: [UI_DESIGN_SYSTEM.md](UI_DESIGN_SYSTEM.md)

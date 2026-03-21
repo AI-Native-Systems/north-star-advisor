@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Multi-Agent Architecture Blueprint
 
-<!-- GENERATION: This is Step 6 of 13. Requires outputs from NORTHSTAR_EXTRACT (and USER_JOURNEYS if --ux). See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 6 of 13. Requires outputs from NORTHSTAR_EXTRACT (and USER_JOURNEYS if --ux). See templates/index.yml -->
 
 > **Tier**: 2 — Implementation (see [INDEX.md](INDEX.md))
 > **Created**: [DATE]

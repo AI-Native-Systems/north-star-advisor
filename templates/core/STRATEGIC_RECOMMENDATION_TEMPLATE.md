@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Strategic Recommendation
 
-<!-- GENERATION: This is Step 11 of 13. Synthesizes all prior documents into actionable guidance. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 11 of 13. Synthesizes all prior documents into actionable guidance. See templates/index.yml -->
 
 > **Tier**: 1 — Strategic Authority
 > **Parent**: [NORTHSTAR.md](NORTHSTAR.md)

@@ -1,6 +1,6 @@
 # [PROJECT NAME]: Architecture Decision Records
 
-<!-- GENERATION: This is Step 9 of 13. Accumulates decisions from all prior steps. See GENERATION_MANIFEST.md -->
+<!-- GENERATION: This is Step 9 of 13. Accumulates decisions from all prior steps. See templates/index.yml -->
 
 > **Parent**: [INDEX.md](INDEX.md)
 > **Format**: ADR-NNNN (sequential, never reused)

@@ -28,19 +28,30 @@ Display current generation progress and next steps.
    ```
 3. If exists:
    a. Read state.json
-   b. Get `plugin_index_path` from state.json
-   c. Read `templates/index.yml` at that path
-   d. Read `north-star-advisor/.work-in-progress/inputs.yml`
+   b. **Legacy state check:** If state.json contains `completed_phases` (pre-2.0.0 format):
+      1. Display project name and creation date from state
+      2. Display: "⚠ State format: v1.x (pre-2.0.0). Run /northstar:resume to migrate."
+      3. **Stop.** Do NOT continue. Do NOT write to state.json.
+   c. Get `plugin_index_path` from state.json
+   d. Read `templates/index.yml` at that path
+   e. Read `north-star-advisor/.work-in-progress/inputs.yml`
 
 If `plugin_index_path` is missing from state.json:
 - Glob: `**/northstar/**/templates/index.yml`
-- Update state.json with found path
+- If exactly 1 match: update state.json with found path
+- If 0 matches: display "Could not locate `templates/index.yml` from cached state or fallback glob." and stop
+- If multiple matches:
+  - List all found paths
+  - Use `AskUserQuestion` with each path as an option
+  - **Stop and wait** for the user's selection
+  - Store selected path in state.json as `plugin_index_path`
+  - Then continue
 
 ### Step 2: Calculate Statistics
 
 1. Use template list from index.yml for expected documents
 2. Check `state.ux` and `state.deep` for enabled flags
-3. Calculate completion from `completed_phases` array
+3. Calculate completion from `completed_templates` array
 
 ### Step 3: Display Status
 
@@ -77,7 +88,7 @@ Progress: [progress bar] [completed]/[total] ([percent]%)
 VALIDATION STATUS
 ───────────────────────────────────────────────────────
 
-[List validation status for completed phases]
+[List validation status for completed templates]
 
 OUTPUTS (actual files in north-star-advisor/docs/)
 ───────────────────────────────────────────────────────
@@ -89,10 +100,10 @@ LAST CHECKPOINT
 ───────────────────────────────────────────────────────
 
 Saved: <timestamp>
-Phase: 5 - USER_JOURNEYS (before)
+Template: USER_JOURNEYS
 
 ▶ Next: Run /northstar:advisor-build to continue
-         Run /northstar:resume --restart to restart current phase
+         Run /northstar:resume --restart to restart current template
 ```
 
 ---

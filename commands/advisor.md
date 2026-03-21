@@ -42,18 +42,31 @@ Your goal is not to extract information—it's to help the user discover what th
 1. Check if `north-star-advisor/.work-in-progress/state.json` exists
 2. If exists:
    - Read current state
+   - **Legacy state check:** If state.json contains `completed_phases` (pre-2.0.0 format):
+     - Display: "This project uses v1.x state format."
+     - Ask user:
+       - "Run /northstar:resume to migrate" → redirect to `/northstar:resume`
+       - "Start fresh (keeps existing docs)":
+         - Delete `north-star-advisor/.work-in-progress/` directory
+         - Display: "Working state cleared. Existing docs preserved in north-star-advisor/docs/"
+         - Proceed to Step 2
+     - Do NOT continue into the normal flow below
    - Check if new flags were passed (--ux, --deep, --full)
-   - If new flags AND project has completed phases:
+   - If new flags AND project has completed templates:
      - Ask user: "A North Star project already exists. Would you like to:"
        - Update flags and generate new templates (`/northstar:advisor-build` with merged flags)
        - Start fresh (overwrites existing)
      - If "update flags", merge flags into state.json and run `/northstar:advisor-build`
-     - If "start fresh", proceed to Step 2
-   - If no new flags OR no completed phases:
+     - If "start fresh":
+       - Delete `north-star-advisor/.work-in-progress/` directory
+       - Proceed to Step 2
+   - If no new flags OR no completed templates:
      - Ask user: "A North Star project already exists. Would you like to:"
        - Continue existing project (`/northstar:resume`)
        - Start fresh (overwrites existing)
-     - If "start fresh", proceed to Step 2
+     - If "start fresh":
+       - Delete `north-star-advisor/.work-in-progress/` directory
+       - Proceed to Step 2
      - If "continue", redirect to `/northstar:resume`
 3. If not exists, proceed to Step 2
 
@@ -279,7 +292,14 @@ Before creating state.json, locate the template index:
 
 ```
 1. Use Glob to find: **/northstar/**/templates/index.yml
-2. Store the absolute path for use in state.json
+2. If exactly 1 match: store the absolute path and write it as plugin_index_path in new state.json
+3. If 0 matches: display "Could not locate templates/index.yml. Is the North Star Advisor plugin available in this workspace?" and stop
+4. If multiple matches:
+   - List all found paths
+   - Use `AskUserQuestion` with each path as an option
+   - **Stop and wait** for the user's selection
+   - Use selected path as `plugin_index_path` in new state.json
+   - Then continue creating state.json
 ```
 
 ### Create state.json
@@ -294,10 +314,10 @@ Before creating state.json, locate the template index:
   "deep": true,
   "search_tool": "<user-specified-tool-or-null>",
   "understanding_verified": true,
-  "current_phase": null,
-  "completed_phases": [],
-  "phase_status": {},
-  "phase_outputs": {},
+  "current_template": null,
+  "completed_templates": [],
+  "template_status": {},
+  "template_outputs": {},
   "validation_results": {},
   "research_complete": false,
   "created_at": "<ISO-8601-timestamp>",
